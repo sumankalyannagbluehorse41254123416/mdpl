@@ -90,7 +90,7 @@ export default function Header() {
                   <li>
                     <Link
                       id="RGKar-MCH-top"
-                      href="https://www.mdpl.co/r-g-kar-medical-college-hospital"
+                      href="/r-g-kar-medical-college-hospital"
                     >
                       R.G.Kar Medical College &amp; Hospital
                     </Link>
@@ -98,7 +98,7 @@ export default function Header() {
                   <li>
                     <Link
                       id="CNMCH-top"
-                      href="https://www.mdpl.co/calcutta-national-medical-college-hospital"
+                      href="/calcutta-national-medical-college-hospital"
                     >
                       Calcutta National Medical College &amp; Hospital
                     </Link>
@@ -106,7 +106,7 @@ export default function Header() {
                   <li>
                     <Link
                       id="CMSDH-top"
-                      href="https://www.mdpl.co/college-of-medicine-sagoreduttahospital"
+                      href="/college-of-medicine-sagoreduttahospital"
                     >
                       College of Medicine &amp; Sagore Dutta Hospital
                     </Link>
@@ -114,7 +114,7 @@ export default function Header() {
                   <li>
                     <Link
                       id="HDH-top"
-                      href="https://www.mdpl.co/howrah-district-hospital"
+                      href="/howrah-district-hospital"
                     >
                       Howrah District Hospital
                     </Link>
@@ -122,7 +122,7 @@ export default function Header() {
                   <li>
                     <Link
                       id="MMCH-top"
-                      href="https://www.mdpl.co/midnapore-medical-college-and-hospital"
+                      href="/midnapore-medical-college-and-hospital"
                     >
                       Midnapore Medical College and Hospital
                     </Link>
@@ -130,7 +130,7 @@ export default function Header() {
                 </ul>
               </li>
               <li>
-                <Link className="" id="Contact-Us-top" href="https://www.mdpl.co/contact-us">
+                <Link className="" id="Contact-Us-top" href="/contact-us">
                   Contact Us
                 </Link>
               </li>
@@ -141,7 +141,7 @@ export default function Header() {
         {/* Appointment Button */}
         <div className="col-lg-3 col-md-3 col-sm-3">
           <div className="hs_appoint">
-            <Link href="https://www.mdpl.co/contact-us" className="appoint-btn">
+            <Link href="/contact-us" className="appoint-btn">
               Make An Appointment
             </Link>
           </div>
