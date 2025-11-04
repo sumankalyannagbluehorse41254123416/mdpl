@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Header() {
   const [menuIconActive, setMenuIconActive] = useState(false);
@@ -17,9 +18,12 @@ export default function Header() {
         <div className="col-lg-3 col-md-3 col-sm-3">
           <div id="hs_logo">
             <Link href="/">
-              <img
-                src="https://www.mdpl.co/images/logo-White.png"
+              <Image
+                src="/images/logo-White.png"
                 alt="logo"
+                width={145} // Add width
+                height={44.06} // Add height
+                priority // Optional: for above-the-fold images
               />
             </Link>
           </div>
@@ -83,7 +87,7 @@ export default function Header() {
                 </ul>
               </li>
               <li>
-                <a className="" id="Our-Centers-top" href="javascript:void(0);">
+                <a className="" id="Our-Centers-top" href="">
                   Our Centers
                 </a>
                 <ul>
