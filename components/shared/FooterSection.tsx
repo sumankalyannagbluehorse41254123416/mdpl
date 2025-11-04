@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function FooterSection() {
   useEffect(() => {
@@ -47,14 +49,15 @@ export default function FooterSection() {
                 <div className="row">
                   <div className="hs_footer_about_us">
                     <div className="col-lg-3 col-md-4 col-sm-12">
-                      <a href="https://www.mdpl.co">
-                        <img
-                          src="https://www.mdpl.co/images/logo-White.png"
+                      <Link href="https://www.mdpl.co">
+                        <Image
+                          src="/images/logo-White.png"
                           alt="logo"
-                          width="180"
-                          height="60"
+                          width={180}
+                          height={60}
+                          priority
                         />
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -84,6 +87,7 @@ export default function FooterSection() {
                             <a
                               href="https://www.facebook.com/mdpl.co"
                               target="_blank"
+                              rel="noopener noreferrer"
                             >
                               <i className="fa fa-facebook"></i>
                             </a>
@@ -92,6 +96,7 @@ export default function FooterSection() {
                             <a
                               href="https://twitter.com/mdpl_co"
                               target="_blank"
+                              rel="noopener noreferrer"
                             >
                               <i className="fa fa-twitter"></i>
                             </a>
@@ -107,23 +112,23 @@ export default function FooterSection() {
                     <div className="hs_footer_link">
                       <ul>
                         <li>
-                          <a href="https://www.mdpl.co">Home</a>
+                          <Link href="/">Home</Link>
                         </li>
                         <li>
-                          <a href="https://www.mdpl.co/about-us">About Us</a>
+                          <Link href="/about">About Us</Link>
                         </li>
                         <li>
-                          <a href="https://www.mdpl.co/our-services">
+                          <Link href="/our-services">
                             Our Services
-                          </a>
+                          </Link>
                         </li>
                         <li>
-                          <a href="https://www.mdpl.co/our-centers">
+                          <Link href="/our-centers">
                             Our Centers
-                          </a>
+                          </Link>
                         </li>
                         <li>
-                          <a href="https://www.mdpl.co/contact-us">Contact Us</a>
+                          <Link href="/contact-us">Contact Us</Link>
                         </li>
                       </ul>
                     </div>
@@ -142,6 +147,7 @@ export default function FooterSection() {
                       data-width="400"
                       data-height="300"
                       target="_blank"
+                      rel="noopener noreferrer"
                       data-link-color="#E95F28"
                       data-theme="#00ac7a"
                       data-tweet-limit="2"
@@ -151,134 +157,6 @@ export default function FooterSection() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* ------------------ Chat Tool ------------------ */}
-        <div className="page-wraper">
-          <div className="chat_tool">
-            <div className="chat_window">
-              {/* Welcome Page */}
-              <div className="welcome_page active">
-                <div className="chat_win_intro">
-                  <h3>Welcome to Chat Tool</h3>
-                  <p>
-                    Search the Help Center or start a chat. We're here to help you
-                    24x7.
-                  </p>
-                </div>
-
-                <div className="ch_theme_button">
-                  <button className="gotoForm">
-                    <ion-icon class="ion-android-send n_con_icon"></ion-icon>
-                    New Conversation
-                  </button>
-                </div>
-              </div>
-
-              {/* User Form */}
-              <div className="user_form">
-                <div className="chat_header">
-                  <div className="chat_header_inner">
-                    <button
-                      className="chat_back_button"
-                      title="Back"
-                    >
-                      <i className="fa fa-angle-left" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
-
-                <form id="firstForm" method="post">
-                  <div className="user_form_inner">
-                    <div className="fieldrow">
-                      <input
-                        className="user_form_input first-not-space"
-                        type="text"
-                        name="name"
-                        placeholder="Name"
-                        required
-                      />
-                    </div>
-                    <div className="fieldrow">
-                      <input
-                        className="user_form_input first-not-space"
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        required
-                      />
-                    </div>
-                    <div className="fieldrow">
-                      <input
-                        className="user_form_input first-not-space"
-                        type="text"
-                        name="contact_no"
-                        placeholder="Contact No."
-                        required
-                      />
-                    </div>
-                    <div className="fieldrow">
-                      <textarea
-                        className="user_form_input first-not-space"
-                        name="first_message"
-                        rows={3}
-                        placeholder="write message here..."
-                        required
-                      ></textarea>
-                    </div>
-                  </div>
-                  <div className="ch_theme_button">
-                    <button className="chatSMS" type="submit">
-                      <ion-icon class="ion-android-send n_con_icon"></ion-icon>
-                      Start Chat
-                    </button>
-                  </div>
-                </form>
-              </div>
-
-              {/* Chat Conversation */}
-              <div className="chat_con">
-                <div className="chat_header">
-                  <div className="chat_header_inner">
-                    <button
-                      className="chat_back_button"
-                      title="Back"
-                    >
-                      <i className="fa fa-angle-left" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
-                <div className="chat_con_body">
-                  <div className="chat_con_inner"></div>
-                </div>
-                <div className="chat_footer">
-                  <form className="chat-form">
-                    <div className="chat_footer_inner">
-                      <input
-                        type="text"
-                        id="m"
-                        className="chat_reply_input first-not-space"
-                        placeholder="Write message here..."
-                        required
-                      />
-                      <input type="hidden" name="userId" id="userId" value="" />
-                      <button
-                        className="chat_reply_submit"
-                        title="Submit"
-                      >
-                        <ion-icon class="ion-android-send"></ion-icon>
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-
-            {/* Floating Chat Button */}
-            <button className="call_button">
-              <i className="fa fa-comments" aria-hidden="true"></i>
-            </button>
           </div>
         </div>
       </footer>
