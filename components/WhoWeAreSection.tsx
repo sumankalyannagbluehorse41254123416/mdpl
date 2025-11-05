@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image"; // ✅ Import the Next.js Image component
 
 export default function WhoWeAreSection() {
   return (
@@ -12,10 +13,14 @@ export default function WhoWeAreSection() {
         </div>
 
         <div className="col-lg-8 col-md-6 col-sm-6">
-          <img
-            src="https://wip.tezcommerce.com:3304/admin/module/47/1649074807374.jpg"
+          {/* ✅ Replaced <img> with <Image /> for optimization */}
+          <Image
+            src="/images/1649074807374.jpg"
             alt="About Us"
             className="about-img"
+            width={455} // ✅ must specify width
+            height={355} // ✅ must specify height
+            priority // ✅ improve LCP (loads early)
           />
         </div>
 
