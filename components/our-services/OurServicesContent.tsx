@@ -21,7 +21,7 @@ export default function OurServicesContent() {
         <p>
           The acquisition of medical imaging is usually carried out by the
           radiographer. Depending on location, the diagnostic radiologist or
-          reporting radiographer, then interprets or "reads" the images and
+          reporting radiographer, then interprets or “reads” the images and
           produces a report of their findings and impression or diagnosis. This
           report is then transmitted to the physician who ordered the imaging,
           either routinely or emergently. Specialist physicians often look at
