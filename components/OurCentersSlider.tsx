@@ -152,15 +152,20 @@ export default function OurCentersSlider() {
       id: 1,
       name: "R.G.Kar Medical College & Hospital",
       image: "/images/1650270284351.jpeg",
+<<<<<<< HEAD
       description: "R.G. Kar Medical College and Hospital is medical school and hospital in Kolkata, West Bengal, India.",
       link: "https://www.mdpl.co/r-g-kar-medical-college-hospital"
+=======
+      description: "R.G. Kar Medical College and Hospitalismedical school and hospital inKolkata, West Bengal, India.",
+      link: "/r-g-kar-medical-college-hospital"
+>>>>>>> 007cf6a756de23a697004a8e1a24c730c77fd447
     },
     {
       id: 2,
       name: "Calcutta National Medical College & Hospital",
       image: "/images/1650270329592.jpg",
       description: "Calcutta National Medical College is locally known as Chittaranjan hospital. It was established in 1948.",
-      link: "https://www.mdpl.co/calcutta-national-medical-college-hospital"
+      link: "/calcutta-national-medical-college-hospital"
     },
     {
       id: 3,
@@ -181,7 +186,7 @@ export default function OurCentersSlider() {
       name: "Midnapore Medical College and Hospital",
       image: "/images/1650270414161.jpeg",
       description: "Located in Midnapore (West Bengal), Midnapore Medical College and Hospital was established in 2004.",
-      link: "https://www.mdpl.co/midnapore-medical-college-and-hospital"
+      link: "/midnapore-medical-college-and-hospital"
     }
   ];
 

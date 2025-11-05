@@ -113,32 +113,36 @@ export default function ClientTestimonials() {
   const testimonials = [
     {
       id: 1,
-      text: "\"We wanted a Diagnostics center with high-quality work, quick turn-around-time (TAT), and competitive pricing to do the diagnostics tests. Midnapore Diagnostics Private Limited has exceeded our expectations. Anyway, I am delighted with their work.\"",
-      author: "Rajeev Kumar, Customer"
+      text: '"We wanted a Diagnostics center with high-quality work, quick turn-around-time (TAT), and competitive pricing to do the diagnostics tests. Midnapore Diagnostics Private Limited has exceeded our expectations. Anyway, I am delighted with their work."',
+      author: "Rajeev Kumar, Customer",
     },
     {
       id: 2,
-      text: "\"Midnapore Diagnostics Private Limited is a complete center for our entire diagnostic needs less than one roof. Staffs are very cooperative and most IMPORTANT the doctor is very soft spoken and gentle. The technology is up to date and quality of ultrasound is excellent. I am a regular patient of this diagnostic center and very happy with service and results.\"",
-      author: "Suman Adhikary, Customer"
+      text: '"Midnapore Diagnostics Private Limited is a complete center for our entire diagnostic needs less than one roof. Staffs are very cooperative and most IMPORTANT the doctor is very soft spoken and gentle. The technology is up to date and quality of ultrasound is excellent. I am a regular patient of this diagnostic center and very happy with service and results."',
+      author: "Suman Adhikary, Customer",
     },
     {
       id: 3,
-      text: "\"We wanted a Diagnostics center with high-quality work, quick turn-around-time (TAT), and competitive pricing to do the diagnostics tests. Midnapore Diagnostics Private Limited has exceeded our expectations. Anyway, I am delighted with their work.\"",
-      author: "Rajeev Kumar, Customer"
+      text: '"We wanted a Diagnostics center with high-quality work, quick turn-around-time (TAT), and competitive pricing to do the diagnostics tests. Midnapore Diagnostics Private Limited has exceeded our expectations. Anyway, I am delighted with their work."',
+      author: "Rajeev Kumar, Customer",
     },
     {
       id: 4,
       text: "“Midnapore Diagnostics Private Limited is a complete center for our entire diagnostic needs less than one roof. Staffs are very cooperative and most IMPORTANT the doctor is very soft spoken and gentle. The technology is up to date and quality of ultrasound is excellent. I am a regular patient of this diagnostic center and very happy with service and results.”",
-      author: "Suman Adhikary, Customer"
-    }
+      author: "Suman Adhikary, Customer",
+    },
   ];
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
+    setCurrentSlide((prev) =>
+      prev === testimonials.length - 1 ? 0 : prev + 1
+    );
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
+    setCurrentSlide((prev) =>
+      prev === 0 ? testimonials.length - 1 : prev - 1
+    );
   };
 
   useEffect(() => {
@@ -164,21 +168,39 @@ export default function ClientTestimonials() {
             <h3>CLIENT TESTIMONIALS</h3>
           </div>
           <div className="our_partners">
-            <div id="our_partners_slider" className="owl-carousel owl-theme owl-loaded owl-drag">
+            <div
+              id="our_partners_slider"
+              className="owl-carousel owl-theme owl-loaded owl-drag"
+            >
               <div className="owl-stage-outer">
                 <div
                   className="owl-stage"
                   style={{
+<<<<<<< HEAD
                     transform: `translate3d(${translateX}px, 0px, 0px)`,
                     transition: "0.45s",
                     width: `${stageWidth}px`
+=======
+                    transform: `translate3d(-${
+                      currentSlide * 485
+                    }px, 0px, 0px)`,
+                    transition: "0.45s",
+                    width: "3880px",
+>>>>>>> 007cf6a756de23a697004a8e1a24c730c77fd447
                   }}
                 >
                   {testimonials.map((testimonial, index) => (
                     <div
                       key={testimonial.id}
+<<<<<<< HEAD
                       className={`owl-item ${index === currentSlide ? "active" : ""}`}
                       style={{ width: `${itemWidth}px`, marginRight: `${itemMargin}px` }}
+=======
+                      className={`owl-item ${
+                        index === currentSlide ? "active" : ""
+                      }`}
+                      style={{ width: "455px", marginRight: "30px" }}
+>>>>>>> 007cf6a756de23a697004a8e1a24c730c77fd447
                     >
                       <div className="our_partners_slider_item">
                         {testimonial.text}
