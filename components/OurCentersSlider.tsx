@@ -12,35 +12,35 @@ export default function OurCentersSlider() {
       name: "R.G.Kar Medical College & Hospital",
       image: "/images/1650270284351.jpeg",
       description: "R.G. Kar Medical College and Hospitalismedical school and hospital inKolkata, West Bengal, India.",
-      link: "https://www.mdpl.co/r-g-kar-medical-college-hospital"
+      link: "/r-g-kar-medical-college-hospital"
     },
     {
       id: 2,
       name: "Calcutta National Medical College & Hospital",
       image: "/images/1650270329592.jpg",
       description: "Calcutta National Medical College is locally known as Chittaranjan hospital. It was established in 1948.",
-      link: "https://www.mdpl.co/calcutta-national-medical-college-hospital"
+      link: "/calcutta-national-medical-college-hospital"
     },
     {
       id: 3,
       name: "College of Medicine & Sagore Dutta Hospital",
       image: "/images/1650270358380.jpeg",
       description: "The College of Medicine & SagoreDutta Hospital (also known as SagarDutta Medical College) is a medical college which has been set up by theGovernment of West Bengal in 2010",
-      link: "https://www.mdpl.co/college-of-medicine-sagoreduttahospital"
+      link: "/college-of-medicine-sagoreduttahospital"
     },
     {
       id: 4,
       name: "Howrah District Hospital",
       image: "/images/1650270391052.jpeg",
       description: "(10,Biplabi HarenGhoshSarani,Howrah.Near- Howrah MuniCipality) We are here to serve Digital X-Ray Facility @70/-(Per Plate)",
-      link: "https://www.mdpl.co/howrah-district-hospital"
+      link: "/howrah-district-hospital"
     },
     {
       id: 5,
       name: "Midnapore Medical College and Hospital",
       image: "/images/1650270414161.jpeg",
       description: "Located in Midnapore (West Bengal), Midnapore Medical College and Hospital was established in 2004.",
-      link: "https://www.mdpl.co/midnapore-medical-college-and-hospital"
+      link: "/midnapore-medical-college-and-hospital"
     }
   ];
 
