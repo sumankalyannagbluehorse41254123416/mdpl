@@ -176,31 +176,16 @@ export default function ClientTestimonials() {
                 <div
                   className="owl-stage"
                   style={{
-<<<<<<< HEAD
                     transform: `translate3d(${translateX}px, 0px, 0px)`,
                     transition: "0.45s",
                     width: `${stageWidth}px`
-=======
-                    transform: `translate3d(-${
-                      currentSlide * 485
-                    }px, 0px, 0px)`,
-                    transition: "0.45s",
-                    width: "3880px",
->>>>>>> 007cf6a756de23a697004a8e1a24c730c77fd447
                   }}
                 >
                   {testimonials.map((testimonial, index) => (
                     <div
                       key={testimonial.id}
-<<<<<<< HEAD
                       className={`owl-item ${index === currentSlide ? "active" : ""}`}
                       style={{ width: `${itemWidth}px`, marginRight: `${itemMargin}px` }}
-=======
-                      className={`owl-item ${
-                        index === currentSlide ? "active" : ""
-                      }`}
-                      style={{ width: "455px", marginRight: "30px" }}
->>>>>>> 007cf6a756de23a697004a8e1a24c730c77fd447
                     >
                       <div className="our_partners_slider_item">
                         {testimonial.text}

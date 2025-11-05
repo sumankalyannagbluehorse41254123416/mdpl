@@ -152,13 +152,8 @@ export default function OurCentersSlider() {
       id: 1,
       name: "R.G.Kar Medical College & Hospital",
       image: "/images/1650270284351.jpeg",
-<<<<<<< HEAD
       description: "R.G. Kar Medical College and Hospital is medical school and hospital in Kolkata, West Bengal, India.",
       link: "https://www.mdpl.co/r-g-kar-medical-college-hospital"
-=======
-      description: "R.G. Kar Medical College and Hospitalismedical school and hospital inKolkata, West Bengal, India.",
-      link: "/r-g-kar-medical-college-hospital"
->>>>>>> 007cf6a756de23a697004a8e1a24c730c77fd447
     },
     {
       id: 2,
