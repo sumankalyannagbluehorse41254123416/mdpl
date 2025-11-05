@@ -14,7 +14,7 @@ export default function HelplineSection() {
             </div>
             <div className="col-md-6 col-sm-6 col-lg-4">
               <div className="book-now">
-                <Link href="https://www.mdpl.co/contact-us">BOOKING</Link>
+                <Link href="/contact-us">BOOKING</Link>
               </div>
             </div>
           </div>
