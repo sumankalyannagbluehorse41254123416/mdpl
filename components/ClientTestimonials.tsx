@@ -105,10 +105,13 @@
 
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 export default function ClientTestimonials() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const stageOuterRef = useRef<HTMLDivElement>(null);
+  const [visibleCount, setVisibleCount] = useState(1);   // 1 on mobile, 2 on desktop
+  const [itemWidth, setItemWidth] = useState(555);      // fallback
 
   const testimonials = [
     {
@@ -135,30 +138,60 @@ export default function ClientTestimonials() {
 
   const nextSlide = () => {
     setCurrentSlide((prev) =>
-      prev === testimonials.length - 1 ? 0 : prev + 1
+      prev >= testimonials.length - visibleCount ? 0 : prev + 1
     );
   };
 
   const prevSlide = () => {
     setCurrentSlide((prev) =>
-      prev === 0 ? testimonials.length - 1 : prev - 1
+      prev === 0 ? testimonials.length - visibleCount : prev - 1
     );
   };
 
+  // Auto-play (still 5 s)
   useEffect(() => {
-    const interval = setInterval(() => {
-      nextSlide();
-    }, 5000);
+    const interval = setInterval(nextSlide, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [visibleCount]);
 
-  // ---- NEW: calculate dimensions dynamically ----
-  const itemWidth = 555;          // same as inline style on .owl-item
-  const itemMargin = 30;          // same as marginRight on .owl-item
+  // ---------- RESPONSIVE CALCULATION ----------
+  useEffect(() => {
+    const calc = () => {
+      if (!stageOuterRef.current) return;
+
+      const container = stageOuterRef.current;
+      const containerW = container.clientWidth;
+      const itemMargin = 30;
+
+      // Desktop >= 992px → show 2 items
+      // Tablet / Mobile < 992px → show 1 item
+      const isDesktop = window.innerWidth >= 992;
+      const count = isDesktop ? 2 : 1;
+
+      // width = (container - (count-1)*margin) / count
+      const width =
+        (containerW - (count - 1) * itemMargin) / count;
+
+      setVisibleCount(count);
+      setItemWidth(width);
+    };
+
+    calc();
+    const ro = new ResizeObserver(calc);
+    if (stageOuterRef.current) ro.observe(stageOuterRef.current);
+
+    window.addEventListener("resize", calc);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", calc);
+    };
+  }, []);
+  // -------------------------------------------
+
+  const itemMargin = 30;
   const totalItemWidth = itemWidth + itemMargin;
   const stageWidth = totalItemWidth * testimonials.length;
   const translateX = -currentSlide * totalItemWidth;
-  // ----------------------------------------------
 
   return (
     <div className="container">
@@ -167,25 +200,37 @@ export default function ClientTestimonials() {
           <div className="who">
             <h3>CLIENT TESTIMONIALS</h3>
           </div>
+
           <div className="our_partners">
             <div
               id="our_partners_slider"
               className="owl-carousel owl-theme owl-loaded owl-drag"
             >
-              <div className="owl-stage-outer">
+              {/* <-- stage outer gets the ref --> */}
+              <div className="owl-stage-outer" ref={stageOuterRef}>
                 <div
                   className="owl-stage"
                   style={{
+                    display: "flex",
                     transform: `translate3d(${translateX}px, 0px, 0px)`,
                     transition: "0.45s",
-                    width: `${stageWidth}px`
+                    width: `${stageWidth}px`,
                   }}
                 >
                   {testimonials.map((testimonial, index) => (
                     <div
                       key={testimonial.id}
-                      className={`owl-item ${index === currentSlide ? "active" : ""}`}
-                      style={{ width: `${itemWidth}px`, marginRight: `${itemMargin}px` }}
+                      className={`owl-item ${
+                        index >= currentSlide && index < currentSlide + visibleCount
+                          ? "active"
+                          : ""
+                      }`}
+                      style={{
+                        flex: `0 0 ${itemWidth}px`,
+                        width: `${itemWidth}px`,
+                        marginRight: `${itemMargin}px`,
+                        boxSizing: "border-box",
+                      }}
                     >
                       <div className="our_partners_slider_item">
                         {testimonial.text}
@@ -196,6 +241,7 @@ export default function ClientTestimonials() {
                   ))}
                 </div>
               </div>
+
               <div className="owl-nav disabled">
                 <button type="button" role="presentation" className="owl-prev">
                   <span aria-label="Previous">‹</span>
@@ -206,6 +252,7 @@ export default function ClientTestimonials() {
               </div>
               <div className="owl-dots disabled"></div>
             </div>
+
             <div className="customNavigation text-right">
               <a className="btn_prev prev" onClick={prevSlide}>
                 <i className="fa fa-chevron-left"></i>
