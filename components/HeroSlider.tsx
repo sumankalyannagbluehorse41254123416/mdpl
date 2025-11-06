@@ -102,7 +102,6 @@
 
 
 
-
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -110,6 +109,7 @@ import Image from "next/image";
 
 export default function HeroSlider() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(true);
 
   const slides = [
     {
@@ -130,14 +130,35 @@ export default function HeroSlider() {
     }
   ];
 
+  // Create extended slides array with clones for infinite loop
+  const extendedSlides = [slides[slides.length - 1], ...slides, slides[0]];
+
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    setIsTransitioning(true);
+    setCurrentSlide((prev) => prev + 1);
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+    setIsTransitioning(true);
+    setCurrentSlide((prev) => prev - 1);
   };
 
+  // Handle infinite loop logic
+  useEffect(() => {
+    if (currentSlide === slides.length + 1) {
+      setTimeout(() => {
+        setIsTransitioning(false);
+        setCurrentSlide(1);
+      }, 500);
+    } else if (currentSlide === 0) {
+      setTimeout(() => {
+        setIsTransitioning(false);
+        setCurrentSlide(slides.length);
+      }, 500);
+    }
+  }, [currentSlide, slides.length]);
+
+  // Auto-play
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();
@@ -161,7 +182,6 @@ export default function HeroSlider() {
         }
         .health_slider .owl-stage {
           display: flex;
-          transition: transform 0.5s ease-in-out !important;
         }
         .health_slider .owl-item {
           flex: 0 0 100%;
@@ -178,17 +198,7 @@ export default function HeroSlider() {
           object-fit: cover;
           display: block;
         }
-        .health_slider .hlc_slider_details_text {
-          position: absolute;
-          top: 50%;
-          left: 0;
-          transform: translateY(-50%);
-          width: 100%;
-          z-index: 2;
-          text-align: center;
-          color: #fff;
-          text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-        }
+      
         .health_slider .owl-nav {
           position: absolute;
           top: 50%;
@@ -198,30 +208,10 @@ export default function HeroSlider() {
           justify-content: space-between;
           pointer-events: none;
         }
-        .health_slider .owl-nav button {
-          pointer-events: all;
-          background: rgba(0,0,0,0.5) !important;
-          color: #fff !important;
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-          font-size: 30px;
-          line-height: 50px !important;
-        }
+
         .health_slider .owl-prev { left: 20px; }
         .health_slider .owl-next { right: 20px; }
 
-        @media (max-width: 768px) {
-          .health_slider .hlc_slider_details_text {
-            padding: 0 20px;
-          }
-          .health_slider .hs_slider_title {
-            font-size: 1.8rem !important;
-          }
-          .health_slider .lead {
-            font-size: 1rem !important;
-          }
-        }
       `}</style>
 
       <div className="health_slider">
@@ -231,12 +221,12 @@ export default function HeroSlider() {
               className="owl-stage" 
               style={{ 
                 transform: `translate3d(-${currentSlide * 100}%, 0px, 0px)`,
-                transition: '0.5s ease-in-out',
+                transition: isTransitioning ? 'transform 0.5s ease-in-out' : 'none',
               }}
             >
-              {slides.map((slide, index) => (
+              {extendedSlides.map((slide, index) => (
                 <div 
-                  key={slide.id}
+                  key={`${slide.id}-${index}`}
                   className={`owl-item ${index === currentSlide ? 'active' : ''}`}
                 >
                   <div className="item">
