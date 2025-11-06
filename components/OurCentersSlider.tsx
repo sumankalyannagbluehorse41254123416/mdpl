@@ -142,10 +142,10 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
 
 export default function OurCentersSlider() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(true);
 
   const centers = [
     {
@@ -185,12 +185,17 @@ export default function OurCentersSlider() {
     }
   ];
 
+  // Create an array with duplicates for infinite loop effect
+  const extendedCenters = [...centers, ...centers, ...centers];
+
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev === centers.length - 1 ? 0 : prev + 1));
+    setIsTransitioning(true);
+    setCurrentSlide((prev) => prev + 1);
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev === 0 ? centers.length - 1 : prev - 1));
+    setIsTransitioning(true);
+    setCurrentSlide((prev) => prev - 1);
   };
 
   useEffect(() => {
@@ -200,13 +205,26 @@ export default function OurCentersSlider() {
     return () => clearInterval(interval);
   }, []);
 
-  // ---- ONLY CHANGE: dynamic calculations ----
-  const slideWidth = 350;   // .owl-item width
-  const slideMargin = 30;   // marginRight
+  // Handle infinite loop reset
+  useEffect(() => {
+    if (currentSlide === centers.length * 2) {
+      setTimeout(() => {
+        setIsTransitioning(false);
+        setCurrentSlide(centers.length);
+      }, 450);
+    } else if (currentSlide === 0) {
+      setTimeout(() => {
+        setIsTransitioning(false);
+        setCurrentSlide(centers.length);
+      }, 450);
+    }
+  }, [currentSlide, centers.length]);
+
+  const slideWidth = 350;
+  const slideMargin = 30;
   const totalSlideWidth = slideWidth + slideMargin;
-  const stageWidth = centers.length * totalSlideWidth; // exact width needed
+  const stageWidth = extendedCenters.length * totalSlideWidth;
   const translateX = -currentSlide * totalSlideWidth;
-  // -----------------------------------------
 
   return (
     <div className="container">
@@ -221,18 +239,18 @@ export default function OurCentersSlider() {
                 className="owl-stage"
                 style={{
                   transform: `translate3d(${translateX}px, 0px, 0px)`,
-                  transition: "0.45s",
+                  transition: isTransitioning ? "0.45s" : "0s",
                   width: `${stageWidth}px`,
                 }}
               >
-                {centers.map((center, index) => (
+                {extendedCenters.map((center, index) => (
                   <div
-                    key={center.id}
+                    key={`${center.id}-${index}`}
                     className={`owl-item ${index === currentSlide ? "active" : ""}`}
                     style={{ width: "350px", marginRight: "30px" }}
                   >
                     <div className="our_doctor_team_slider_item">
-                      <Image
+                      <img
                         src={center.image}
                         alt={center.name}
                         width={300}
@@ -266,8 +284,11 @@ export default function OurCentersSlider() {
                 <button
                   key={index}
                   role="button"
-                  className={`owl-dot ${index === currentSlide ? "active" : ""}`}
-                  onClick={() => setCurrentSlide(index)}
+                  className={`owl-dot ${index === (currentSlide % centers.length) ? "active" : ""}`}
+                  onClick={() => {
+                    setIsTransitioning(true);
+                    setCurrentSlide(centers.length + index);
+                  }}
                 >
                   <span></span>
                 </button>
