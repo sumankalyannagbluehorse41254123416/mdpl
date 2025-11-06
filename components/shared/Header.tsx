@@ -6,53 +6,53 @@ import Image from "next/image";
 
 export default function Header() {
   const [menuIconActive, setMenuIconActive] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleToggle = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleToggle = () => {
     setMenuIconActive(!menuIconActive);
+    setMenuOpen(!menuOpen);
   };
 
   return (
-    <header id="hs_header">
+    <header id="hs_header" className="fixed">
       <div className="">
-        {/* Logo Section */}
         <div className="col-lg-3 col-md-3 col-sm-3">
           <div id="hs_logo">
             <Link href="/">
               <Image
                 src="/images/logo-White.png"
                 alt="logo"
-                width={145} // Add width
-                height={44.06} // Add height
-                priority // Optional: for above-the-fold images
+                width={150}
+                height={50}
+                priority
               />
             </Link>
           </div>
         </div>
-
-        {/* Menu Section */}
+        
         <div className="col-lg-6 col-md-6 col-sm-6">
           <button
             type="button"
-            className="hs_nav_toggle navbar-toggle"
+            className={`hs_nav_toggle navbar-toggle ${menuOpen ? "" : "collapsed"}`}
             data-toggle="collapse"
             data-target="#bs-example-navbar-collapse-1"
+            aria-expanded={menuOpen}
+            aria-controls="bs-example-navbar-collapse-1"
+            onClick={handleToggle}
           >
             <span className="menu-dis">Menu</span>
-            <div
-              onClick={handleToggle}
-              id="iconvar"
-              className={menuIconActive ? "change" : ""}
-            >
+            <div id="iconvar" className={menuIconActive ? "change" : ""}>
               <div className="bar1"></div>
               <div className="bar2"></div>
               <div className="bar3"></div>
             </div>
           </button>
-
+          
           <nav id="topManu">
             <ul
-              className="hs_menu collapse navbar-collapse"
+              className={`hs_menu navbar-collapse collapse ${menuOpen ? "show" : ""}`}
               id="bs-example-navbar-collapse-1"
+              style={menuOpen ? {} : { height: "0.8px" }}
             >
               <li>
                 <Link className="active" id="Home-top" href="/">
@@ -65,7 +65,7 @@ export default function Header() {
                 </Link>
               </li>
               <li>
-                <a className="" id="Our-Services-top" href="">
+                <a className="" id="Our-Services-top" href="javascript:void(0);">
                   Our Services
                 </a>
                 <ul>
@@ -87,47 +87,32 @@ export default function Header() {
                 </ul>
               </li>
               <li>
-                <a className="" id="Our-Centers-top" href="">
+                <a className="" id="Our-Centers-top" href="javascript:void(0);">
                   Our Centers
                 </a>
                 <ul>
                   <li>
-                    <Link
-                      id="RGKar-MCH-top"
-                      href="/r-g-kar-medical-college-hospital"
-                    >
-                      R.G.Kar Medical College &amp; Hospital
+                    <Link id="RGKar-MCH-top" href="/r-g-kar-medical-college-hospital">
+                      R.G.Kar Medical College & Hospital
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      id="CNMCH-top"
-                      href="/calcutta-national-medical-college-hospital"
-                    >
-                      Calcutta National Medical College &amp; Hospital
+                    <Link id="CNMCH-top" href="/calcutta-national-medical-college-hospital">
+                      Calcutta National Medical College & Hospital
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      id="CMSDH-top"
-                      href="/college-of-medicine-sagoreduttahospital"
-                    >
-                      College of Medicine &amp; Sagore Dutta Hospital
+                    <Link id="CMSDH-top" href="/college-of-medicine-sagoreduttahospital">
+                      College of Medicine & Sagore Dutta Hospital
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      id="HDH-top"
-                      href="/howrah-district-hospital"
-                    >
+                    <Link id="HDH-top" href="/howrah-district-hospital">
                       Howrah District Hospital
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      id="MMCH-top"
-                      href="/midnapore-medical-college-and-hospital"
-                    >
+                    <Link id="MMCH-top" href="/midnapore-medical-college-and-hospital">
                       Midnapore Medical College and Hospital
                     </Link>
                   </li>
@@ -141,8 +126,7 @@ export default function Header() {
             </ul>
           </nav>
         </div>
-
-        {/* Appointment Button */}
+        
         <div className="col-lg-3 col-md-3 col-sm-3">
           <div className="hs_appoint">
             <Link href="/contact-us" className="appoint-btn">

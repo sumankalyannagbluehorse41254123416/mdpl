@@ -36,7 +36,7 @@ export default function MRIScanSection() {
           </div>
 
           <a
-            href="https://www.mdpl.co/contact-us"
+            href="/contact-us"
             className="btn btn-default"
             target="_blank"
             rel="noopener noreferrer"
