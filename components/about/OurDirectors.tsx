@@ -29,10 +29,10 @@ export default function OurDirectors() {
     <div className="container">
       <div className="">
         <h2 className="our-drt">Our Directors</h2>
-        <div className="col-lg-8 col-md-6 col-lg-offset-3">
+        <div className="col-lg-12 ">
           <div className="row">
             {directors.map((director) => (
-              <div key={director.id} className="col-lg-4 col-md-6 sec_texxt bodd">
+              <div key={director.id} className="col-lg-4 col-md-4 sec_texxt bodd">
                 <div className="wde">
                   <Image
                     src={director.image}
