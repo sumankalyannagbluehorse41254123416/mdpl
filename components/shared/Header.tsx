@@ -15,7 +15,7 @@ export default function Header() {
 
   return (
     <header id="hs_header" className="fixed">
-      <div className="">
+      <div className="row">
         <div className="col-lg-3 col-md-3 col-sm-3">
           <div id="hs_logo">
             <Link href="/">
