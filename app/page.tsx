@@ -75,11 +75,20 @@ export default async function Home() {
       })) || [],
   };
 
+  // ✅ WhoWeAreSection data (third section)
+const whoWeAreSection = sections[2] || {};
+const whoWeAreData = {
+  title: stripHtml(whoWeAreSection.title || ""),
+  shortDescription: whoWeAreSection.shortDescription || "",
+  image: whoWeAreSection.image || "/images/1649074807374.jpg",
+};
+
+
   return (
     <div className="page-content">
       <HeroSlider data={heroData} />
       <ServicesSection data={servicesData} />
-      <WhoWeAreSection />
+      <WhoWeAreSection data={whoWeAreData} />
       <OurCentersSlider />
       <ClientTestimonials />
     </div>
