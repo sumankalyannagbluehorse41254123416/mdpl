@@ -11,27 +11,27 @@ export default function ContactForm() {
       id: "newscan-0",
       name: "C.T.SCAN",
       hospitals: [
-        { value: "389:Rs.150/-", label: "R.G.KAR MEDICAL COLLEGE AND HOSPITAL" },
-        { value: "392:Rs.200/-", label: "COLLEGE OF MEDICINE AND SAGOREDUTTA HOSPITAL" }
+        { value: "Rs.150/-", label: "R.G.KAR MEDICAL COLLEGE AND HOSPITAL" },
+        { value: "Rs.200/-", label: "COLLEGE OF MEDICINE AND SAGOREDUTTA HOSPITAL" }
       ]
     },
     {
       id: "newscan-1",
       name: "M.R.I SCAN",
       hospitals: [
-        { value: "390:Rs.150/-", label: "R.G.KAR MEDICAL COLLEGE AND HOSPITAL" },
-        { value: "393:Rs.250/-", label: "CALCUTTA NATIONAL MEDICAL COLLEGE AND HOSPITAL" }
+        { value: "Rs.150/-", label: "R.G.KAR MEDICAL COLLEGE AND HOSPITAL" },
+        { value: "Rs.250/-", label: "CALCUTTA NATIONAL MEDICAL COLLEGE AND HOSPITAL" }
       ]
     },
     {
       id: "newscan-2",
       name: "DIGITAL X-RAY",
       hospitals: [
-        { value: "391:Rs.150/-", label: "R.G.KAR MEDICAL COLLEGE AND HOSPITAL" },
-        { value: "394:Rs.100/-", label: "COLLEGE OF MEDICINE AND SAGOREDUTTA HOSPITAL" },
-        { value: "395:Rs.300/-", label: "HOWRAH DISTRICT HOSPITAL" },
-        { value: "396:Rs.350/-", label: "MIDNAPORE MEDICAL COLLEGE AND HOSPITAL" },
-        { value: "397:Rs.450/-", label: "CALCUTTA NATIONAL MEDICAL COLLEGE AND HOSPITAL" }
+        { value: "Rs.150/-", label: "R.G.KAR MEDICAL COLLEGE AND HOSPITAL" },
+        { value: "Rs.100/-", label: "COLLEGE OF MEDICINE AND SAGOREDUTTA HOSPITAL" },
+        { value: "Rs.300/-", label: "HOWRAH DISTRICT HOSPITAL" },
+        { value: "Rs.350/-", label: "MIDNAPORE MEDICAL COLLEGE AND HOSPITAL" },
+        { value: "Rs.450/-", label: "CALCUTTA NATIONAL MEDICAL COLLEGE AND HOSPITAL" }
       ]
     }
   ];

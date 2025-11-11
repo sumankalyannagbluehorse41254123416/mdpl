@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
         hostname: "wip.tezcommerce.com",
         port: "3304",
       },
+      {
+        protocol: "https",
+        hostname: "ik.imagekit.io",
+      },
     ],
   },
 };
