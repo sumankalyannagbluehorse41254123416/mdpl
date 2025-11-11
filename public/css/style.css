@@ -1514,6 +1514,12 @@ ul.pattern li #style {
 	height: 210px;
 }
 
+@media (max-width:767px){
+    .hs_page_cost img{
+        position: relative;
+    }
+}
+
 .hs_page_cost_text{
 	position: absolute;
     background: #00ac7a96;
@@ -1521,6 +1527,12 @@ ul.pattern li #style {
     color: #ffffff;
     display: block;
     right: 0;
+}
+
+@media (max-width:767px){
+    .hs_page_cost_text{
+        top: 0;
+    }
 }
 
 .hs_page_name{
@@ -3701,11 +3713,7 @@ div[data-target]>div {
     }
 }
 
-@media (min-width:616px) and (max-width:767px){
-.hs_heading_text{
-    margin: 0 0 65px;
-}
-}
+
 
 @media (max-width:575px){
     #patients_testimonials_slider .patients_testimonials_slider_item{
@@ -6620,6 +6628,10 @@ li.hc-home-new:after {
     .hlc_slider_details img {
         height: 220px;
     }
+
+    .hs_heading.hspt{
+        margin: 0px 0 0;
+    }
 }
 
 @media (max-width: 560px) {
@@ -6729,6 +6741,7 @@ li.hc-home-new:after {
 
 
 /* Landscape phones and down */
+
 
 @media (max-width: 480px) {
     .carousel-inner>.item>a>img,
