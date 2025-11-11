@@ -83,14 +83,40 @@ const whoWeAreData = {
   image: whoWeAreSection.image || "/images/1649074807374.jpg",
 };
 
+// ✅ OurCentersSlider data (fourth section)
+const ourCentersSection = sections[3] || {};
+const ourCentersData = {
+  title: stripHtml(ourCentersSection.title || ""),
+  subsections:
+    ourCentersSection.subsections?.map((sub, index) => ({
+      id: sub.id ?? index, // default numeric id
+      title: stripHtml(sub.title || ""),
+      description: stripHtml(sub.description || ""),
+      image: sub.image || "",
+    })) || [],
+};
+
+
+// ✅ Client Testimonials (index 4)
+const clientTestimonialsSection = sections[4] || {};
+const clientTestimonialsData = {
+  title: stripHtml(clientTestimonialsSection.title || ""),
+  subsections:
+    clientTestimonialsSection.subsections?.map((sub, index) => ({
+      id: sub.id ?? index,
+      title: stripHtml(sub.title || ""), // author name
+      description: stripHtml(sub.description || ""), // testimonial text
+    })) || [],
+};
+
 
   return (
     <div className="page-content">
       <HeroSlider data={heroData} />
       <ServicesSection data={servicesData} />
       <WhoWeAreSection data={whoWeAreData} />
-      <OurCentersSlider />
-      <ClientTestimonials />
+      <OurCentersSlider data={ourCentersData} />
+      <ClientTestimonials data={clientTestimonialsData} />
     </div>
   );
 }
