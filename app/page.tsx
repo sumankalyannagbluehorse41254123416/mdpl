@@ -83,13 +83,26 @@ const whoWeAreData = {
   image: whoWeAreSection.image || "/images/1649074807374.jpg",
 };
 
+// ✅ OurCentersSlider data (fourth section)
+const ourCentersSection = sections[3] || {};
+const ourCentersData = {
+  title: stripHtml(ourCentersSection.title || ""),
+  subsections:
+    ourCentersSection.subsections?.map((sub, index) => ({
+      id: sub.id ?? index, // default numeric id
+      title: stripHtml(sub.title || ""),
+      description: stripHtml(sub.description || ""),
+      image: sub.image || "",
+    })) || [],
+};
+
 
   return (
     <div className="page-content">
       <HeroSlider data={heroData} />
       <ServicesSection data={servicesData} />
       <WhoWeAreSection data={whoWeAreData} />
-      <OurCentersSlider />
+      <OurCentersSlider data={ourCentersData} />
       <ClientTestimonials />
     </div>
   );
