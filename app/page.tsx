@@ -97,13 +97,26 @@ const ourCentersData = {
 };
 
 
+// ✅ Client Testimonials (index 4)
+const clientTestimonialsSection = sections[4] || {};
+const clientTestimonialsData = {
+  title: stripHtml(clientTestimonialsSection.title || ""),
+  subsections:
+    clientTestimonialsSection.subsections?.map((sub, index) => ({
+      id: sub.id ?? index,
+      title: stripHtml(sub.title || ""), // author name
+      description: stripHtml(sub.description || ""), // testimonial text
+    })) || [],
+};
+
+
   return (
     <div className="page-content">
       <HeroSlider data={heroData} />
       <ServicesSection data={servicesData} />
       <WhoWeAreSection data={whoWeAreData} />
       <OurCentersSlider data={ourCentersData} />
-      <ClientTestimonials />
+      <ClientTestimonials data={clientTestimonialsData} />
     </div>
   );
 }
