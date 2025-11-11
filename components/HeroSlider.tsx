@@ -1,137 +1,82 @@
-// "use client";
-
-// import React, { useState, useEffect } from "react";
-// import Image from "next/image";
-
-// export default function HeroSlider() {
-//   const [currentSlide, setCurrentSlide] = useState(0);
-
-//   const slides = [
-//     {
-//       id: 1,
-//       image: "/images/1649066240462.jpg",
-//       title: "Welcome To Midnapore Diagnostics Pvt Ltd",
-//       description: "A JOINT VENTURE PARTNER WITH DEPT. OF HEALTH AND FAMILY WELFARE,GOVT. OF WEST BENGAL",
-//       buttonText: "OUR SERVICES",
-//       buttonLink: "/our-services"
-//     },
-//     {
-//       id: 2,
-//       image: "/images/1649066261596.jpg",
-//       title: "Welcome To Midnapore Diagnostics Pvt Ltd",
-//       description: "A JOINT VENTURE PARTNER WITH DEPT. OF HEALTH AND FAMILY WELFARE,GOVT. OF WEST BENGAL",
-//       buttonText: "OUR CENTERS",
-//       buttonLink: "/our-centers"
-//     }
-//   ];
-
-//   const nextSlide = () => {
-//     setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-//   };
-
-//   const prevSlide = () => {
-//     setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
-//   };
-
-//   useEffect(() => {
-//     const interval = setInterval(() => {
-//       nextSlide();
-//     }, 5000);
-//     return () => clearInterval(interval);
-//   }, []);
-
-//   return (
-//     <div className="health_slider">
-//       <div className="owl-carousel owl-theme owl-loaded owl-drag">
-//         <div className="owl-stage-outer">
-//           <div 
-//             className="owl-stage" 
-//             style={{ 
-//               transform: `translate3d(-${currentSlide * 1097.2}px, 0px, 0px)`,
-//               transition: '0.25s',
-//               width: '6584px'
-//             }}
-//           >
-//             {slides.map((slide, index) => (
-//               <div 
-//                 key={slide.id}
-//                 className={`owl-item ${index === currentSlide ? 'active' : ''}`}
-//                 style={{ width: '1087.2px', marginRight: '10px' }}
-//               >
-//                 <div className="item">
-//                   <div className="hlc_slider_details">
-//                     <Image 
-//                       src={slide.image}
-//                       alt={slide.title}
-//                       width={1200}
-//                       height={600}
-//                       className="w-100 animated fadeInDown"
-//                     />
-//                     <div className="hlc_slider_details_text">
-//                       <div className="container">
-//                         <div className="row">
-//                           <div className="col-lg-12 col-md-12 col-sm-12">
-//                             <h1 className="hs_slider_title animated bounceInDown">{slide.title}</h1>
-//                             <p className="lead animated pulse">{slide.description}</p>
-//                             <a href={slide.buttonLink} className="btn btn-default animated fadeInRightBig">
-//                               {slide.buttonText}
-//                             </a>
-//                           </div>
-//                         </div>
-//                       </div>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//         <div className="owl-nav">
-//           <button type="button" role="presentation" className="owl-prev" onClick={prevSlide}>
-//             <span aria-label="Previous">‹</span>
-//           </button>
-//           <button type="button" role="presentation" className="owl-next" onClick={nextSlide}>
-//             <span aria-label="Next">›</span>
-//           </button>
-//         </div>
-//         <div className="owl-dots disabled"></div>
-//       </div>
-//     </div>
-//   );
-// }
-
-
-
 "use client";
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
-export default function HeroSlider() {
-  const [currentSlide, setCurrentSlide] = useState(0);
+// ✅ Helper: decode & strip empty <p></p> or HTML tags
+const decodeHTML = (text: string = ""): string => {
+  if (!text) return "";
+
+  return text
+    .replace(/&nbsp;/g, " ") // replace non-breaking spaces
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/<p>\s*<\/p>/g, "") // remove empty <p></p> tags
+    .replace(/<\/?[^>]+(>|$)/g, "") // strip all HTML tags
+    .trim(); // remove leading/trailing whitespace
+};
+
+
+interface Subsection {
+  id?: number | string;
+  image?: string;
+  title?: string;
+  description?: string;
+}
+
+interface HeroSliderProps {
+  data?: {
+    subsections?: Subsection[];
+  };
+}
+
+export default function HeroSlider({ data }: HeroSliderProps) {
+  const subsections = data?.subsections || [];
+
+  // ✅ If CMS subsections exist, use them; else fallback to static slides
+  const slides =
+    subsections.length > 0
+      ? subsections.map((sub, index) => ({
+          id: sub.id || index + 1,
+          image: sub.image || "/images/default-banner.jpg",
+          title: decodeHTML(sub.title || ""),
+          description: decodeHTML(sub.description || ""),
+          buttonText: index % 2 === 0 ? "OUR SERVICES" : "OUR CENTERS",
+          buttonLink: index % 2 === 0 ? "/our-services" : "/our-centers",
+        }))
+      : [
+          {
+            id: 1,
+            image: "/images/1649066240462.jpg",
+            title: "Welcome To Midnapore Diagnostics Pvt Ltd",
+            description:
+              "A JOINT VENTURE PARTNER WITH DEPT. OF HEALTH AND FAMILY WELFARE, GOVT. OF WEST BENGAL",
+            buttonText: "OUR SERVICES",
+            buttonLink: "/our-services",
+          },
+          {
+            id: 2,
+            image: "/images/1649066261596.jpg",
+            title: "Welcome To Midnapore Diagnostics Pvt Ltd",
+            description:
+              "A JOINT VENTURE PARTNER WITH DEPT. OF HEALTH AND FAMILY WELFARE, GOVT. OF WEST BENGAL",
+            buttonText: "OUR CENTERS",
+            buttonLink: "/our-centers",
+          },
+        ];
+
+  const [currentSlide, setCurrentSlide] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(true);
 
-  const slides = [
-    {
-      id: 1,
-      image: "/images/1649066240462.jpg",
-      title: "Welcome To Midnapore Diagnostics Pvt Ltd",
-      description: "A JOINT VENTURE PARTNER WITH DEPT. OF HEALTH AND FAMILY WELFARE,GOVT. OF WEST BENGAL",
-      buttonText: "OUR SERVICES",
-      buttonLink: "/our-services"
-    },
-    {
-      id: 2,
-      image: "/images/1649066261596.jpg",
-      title: "Welcome To Midnapore Diagnostics Pvt Ltd",
-      description: "A JOINT VENTURE PARTNER WITH DEPT. OF HEALTH AND FAMILY WELFARE,GOVT. OF WEST BENGAL",
-      buttonText: "OUR CENTERS",
-      buttonLink: "/our-centers"
-    }
+  // ✅ Create extended slides array with clones for infinite loop
+  const extendedSlides = [
+    slides[slides.length - 1],
+    ...slides,
+    slides[0],
   ];
-
-  // Create extended slides array with clones for infinite loop
-  const extendedSlides = [slides[slides.length - 1], ...slides, slides[0]];
 
   const nextSlide = () => {
     setIsTransitioning(true);
@@ -143,7 +88,7 @@ export default function HeroSlider() {
     setCurrentSlide((prev) => prev - 1);
   };
 
-  // Handle infinite loop logic
+  // ✅ Infinite loop effect
   useEffect(() => {
     if (currentSlide === slides.length + 1) {
       setTimeout(() => {
@@ -158,7 +103,7 @@ export default function HeroSlider() {
     }
   }, [currentSlide, slides.length]);
 
-  // Auto-play
+  // ✅ Auto-play every 5s
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();
@@ -168,7 +113,7 @@ export default function HeroSlider() {
 
   return (
     <>
-      {/* ============ ADD THIS CSS ONCE (globals.css or inside <style> tag) ============ */}
+        {/* ============ ADD THIS CSS ONCE (globals.css or inside <style> tag) ============ */}
       <style jsx global>{`
         .health_slider {
           position: relative;
@@ -217,21 +162,25 @@ export default function HeroSlider() {
       <div className="health_slider">
         <div className="owl-carousel owl-theme owl-loaded owl-drag">
           <div className="owl-stage-outer">
-            <div 
-              className="owl-stage" 
-              style={{ 
+            <div
+              className="owl-stage"
+              style={{
                 transform: `translate3d(-${currentSlide * 100}%, 0px, 0px)`,
-                transition: isTransitioning ? 'transform 0.5s ease-in-out' : 'none',
+                transition: isTransitioning
+                  ? "transform 0.5s ease-in-out"
+                  : "none",
               }}
             >
               {extendedSlides.map((slide, index) => (
-                <div 
+                <div
                   key={`${slide.id}-${index}`}
-                  className={`owl-item ${index === currentSlide ? 'active' : ''}`}
+                  className={`owl-item ${
+                    index === currentSlide ? "active" : ""
+                  }`}
                 >
                   <div className="item">
                     <div className="hlc_slider_details">
-                      <Image 
+                      <Image
                         src={slide.image}
                         alt={slide.title}
                         width={1200}
@@ -243,9 +192,16 @@ export default function HeroSlider() {
                         <div className="container">
                           <div className="row">
                             <div className="col-lg-12 col-md-12 col-sm-12">
-                              <h1 className="hs_slider_title animated bounceInDown">{slide.title}</h1>
-                              <p className="lead animated pulse">{slide.description}</p>
-                              <a href={slide.buttonLink} className="btn btn-default animated fadeInRightBig">
+                              <h1 className="hs_slider_title animated bounceInDown">
+                                {slide.title}
+                              </h1>
+                              <p className="lead animated pulse">
+                                {slide.description}
+                              </p>
+                              <a
+                                href={slide.buttonLink}
+                                className="btn btn-default animated fadeInRightBig"
+                              >
                                 {slide.buttonText}
                               </a>
                             </div>
@@ -260,13 +216,24 @@ export default function HeroSlider() {
           </div>
 
           <div className="owl-nav">
-            <button type="button" role="presentation" className="owl-prev" onClick={prevSlide}>
+            <button
+              type="button"
+              role="presentation"
+              className="owl-prev"
+              onClick={prevSlide}
+            >
               <span aria-label="Previous">‹</span>
             </button>
-            <button type="button" role="presentation" className="owl-next" onClick={nextSlide}>
+            <button
+              type="button"
+              role="presentation"
+              className="owl-next"
+              onClick={nextSlide}
+            >
               <span aria-label="Next">›</span>
             </button>
           </div>
+
           <div className="owl-dots disabled"></div>
         </div>
       </div>

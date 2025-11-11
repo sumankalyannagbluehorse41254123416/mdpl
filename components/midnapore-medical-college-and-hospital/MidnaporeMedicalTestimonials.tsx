@@ -51,7 +51,7 @@ export default function MidnaporeMedicalTestimonials() {
   return (
     <div className="container">
       <div className="col-lg-12 col-md-12 col-sm-12">
-        <h4 className="hs_heading hspt">SERVICES PROVIDED AT COLLEGE OF MEDICINE & SAGORE DUTTA HOSPITAL</h4>
+        <h4 className="hs_heading hspt">SERVICES PROVIDED AT MIDNAPORE MEDICAL COLLEGE AND HOSPITAL</h4>
           <h6 className="hs_heading_text">With advanced technology you can get the Most accurate results</h6>
         
         <div className="patients_testimonials">           
