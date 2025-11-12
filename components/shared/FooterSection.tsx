@@ -89,7 +89,8 @@ export default function FooterSection() {
                               target="_blank"
                               rel="noopener noreferrer"
                             >
-                              <i className="fa fa-facebook"></i>
+                              {/* <i className="fa fa-facebook"></i> */}
+                              <i className="fa-brands fa-facebook-f"></i>
                             </a>
                           </li>
                           <li>
@@ -98,7 +99,8 @@ export default function FooterSection() {
                               target="_blank"
                               rel="noopener noreferrer"
                             >
-                              <i className="fa fa-twitter"></i>
+                              {/* <i className="fa fa-twitter"></i> */}
+                              <i className="fa-brands fa-twitter"></i>
                             </a>
                           </li>
                         </ul>
