@@ -1840,6 +1840,13 @@ ul.pattern li #style {
     -o-transition: all 0.5s;
 }
 
+#our_doctor_team_slider .owl-dots button{
+    background-color: #000;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
 
 /******************** Our Doctor Team end ***********************/
 
