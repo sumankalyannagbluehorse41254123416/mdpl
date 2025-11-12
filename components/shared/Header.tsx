@@ -65,7 +65,7 @@ export default function Header() {
                 </Link>
               </li>
               <li>
-                <a className="" id="Our-Services-top" href="javascript:void(0);">
+                <a className="" id="Our-Services-top" href="">
                   Our Services
                 </a>
                 <ul>
@@ -87,7 +87,7 @@ export default function Header() {
                 </ul>
               </li>
               <li>
-                <a className="" id="Our-Centers-top" href="javascript:void(0);">
+                <a className="" id="Our-Centers-top" href="">
                   Our Centers
                 </a>
                 <ul>
