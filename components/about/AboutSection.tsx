@@ -3,7 +3,33 @@
 import React from "react";
 import Image from "next/image";
 
-export default function AboutSection() {
+interface AboutSectionProps {
+  section?: {
+    title?: string;
+    shortDescription?: string;
+    image?: string;
+  };
+}
+
+// ✅ Utility: Clean HTML & decode entities safely
+function cleanText(html?: string): string {
+  if (!html) return "";
+  let text = html.replace(/<[^>]*>/g, "");
+  text = text
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
+  return text.trim();
+}
+
+export default function AboutSection({ section }: AboutSectionProps) {
+  const title = section?.title || "About Us";
+  const description = cleanText(section?.shortDescription);
+  const imageSrc = section?.image || "/images/default-about.jpg";
+
   return (
     <div className="container">
       <div className="col-lg-12 col-md-12 col-sm-12">
@@ -12,10 +38,9 @@ export default function AboutSection() {
         <div className="row hs_how_we_are">
           <div className="col-lg-12 col-md-12 col-sm-12 d-flex flex-wrap align-items-center">
             <div className="col-lg-6 col-md-6 col-sm-12 mb-3">
-              {/* ✅ Optimized image */}
               <Image
-                src="/images/1649076201819.jpg"
-                alt="About Us"
+                src={imageSrc}
+                alt={title}
                 width={455}
                 height={370}
                 className="img-fluid rounded shadow-sm"
@@ -26,26 +51,9 @@ export default function AboutSection() {
             <div className="col-lg-6 col-md-6 col-sm-12">
               <div className="hs_how_we_are_text">
                 <h4>
-                  <strong>ABOUT US</strong>
+                  <strong>{title}</strong>
                 </h4>
-                <p>
-                  A victorious pathway towards our human world, We Midnapore
-                  Diagnostics Private Limited, started our auspicious journey
-                  with the prudence to develop an integrated diagnostic centre
-                  in West Bengal in India, under PPP model, with the support of
-                  Swasthya Bhawan, Dept. of Health & Family Welfare. In the
-                  medical arena, We have started our journey from R.G.Kar
-                  Medical College & Hospital with CT Scan Machine since decade,
-                  later on we installed M.R.I Scan Machine in 2010. Then from
-                  Year 2014, we started Operating & Managing Diagnostic Centres
-                  in District as well as other major Govt. Medical College &
-                  Hospitals in W.B. with advanced M.R.I Machine and CT Scan
-                  Machines along with Digital X-ray (DR) machines, which surpass
-                  all expectation. Our Goal is to offer services in economically
-                  developed/non-developed areas at very reasonable price i.e. at
-                  Best Price by Govt. of W.B., and also made our service
-                  available for 24 hrs 365 days.
-                </p>
+                <p>{description}</p>
               </div>
             </div>
           </div>

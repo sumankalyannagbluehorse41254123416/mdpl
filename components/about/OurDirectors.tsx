@@ -3,46 +3,64 @@
 import React from "react";
 import Image from "next/image";
 
-export default function OurDirectors() {
-  const directors = [
-    {
-      id: 1,
-      image: "/images/1673508317136.jpg",
-      alt: "Director 1",
-      name: ""
-    },
-    {
-      id: 2,
-      image: "/images/1673508615444.jpg",
-      alt: "MR. BISWANATH ROY",
-      name: ""
-    },
-    {
-      id: 3,
-      image: "/images/1673531849532.jpg",
-      alt: "MR. SUKESH AGARWAL",
-      name: ""
-    }
-  ];
+// ✅ Props type definition
+interface Section {
+  title?: string;
+  subsections?: {
+    id?: number;
+    image?: string;
+  }[];
+}
+
+interface OurDirectorsProps {
+  section?: Section;
+}
+
+export default function OurDirectors({ section }: OurDirectorsProps) {
+  const title = section?.title || "Our Directors";
+  const directors = section?.subsections || [];
 
   return (
     <div className="container home_director">
-        <h2 className="our-drt">Our Directors</h2>
+      {/* ✅ Dynamic title */}
+      <h2 className="our-drt">{title}</h2>
+
       <div className="row justify-content-center">
-        <div className="col-lg-9" style={{float:"none",margin:"0 auto"}}>
+        <div className="col-lg-9" style={{ float: "none", margin: "0 auto" }}>
           <div className="row">
-            {directors.map((director) => (
-              <div key={director.id} className="col-lg-4 col-md-4 sec_texxt bodd">
+            {directors.map((director, index) => (
+              <div
+                key={director.id || index}
+                className="col-lg-4 col-md-4 sec_texxt bodd"
+              >
                 <div className="wde">
-                  <Image
-                    src={director.image}
-                    alt={director.alt}
-                    width={200}
-                    height={200}
-                    className="img-fluid"
-                  />
+                  {/* ✅ Dynamic image from subsection.image */}
+                  {director.image ? (
+                    <Image
+                      src={director.image}
+                      alt={director.image.split("/").pop() || "Director"}
+                      width={200}
+                      height={200}
+                      className="img-fluid"
+                    />
+                  ) : (
+                    <div
+                      style={{
+                        width: 200,
+                        height: 200,
+                        background: "#f0f0f0",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      No Image
+                    </div>
+                  )}
                 </div>
-                <h2>{director.name}</h2>
+
+                {/* ✅ Optional: director name if later added to CMS */}
+                <h2>{/* {director.title || ""} */}</h2>
               </div>
             ))}
           </div>
