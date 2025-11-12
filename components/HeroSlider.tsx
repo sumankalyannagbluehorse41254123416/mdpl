@@ -135,14 +135,9 @@ export default function HeroSlider({ data }: HeroSliderProps) {
         }
         .health_slider .item {
           position: relative;
+          padding-top: 60px;
         }
-        .health_slider .hlc_slider_details img {
-          width: 100%;
-          height: auto;
-          max-height: 80vh;
-          object-fit: cover;
-          display: block;
-        }
+    
       
         .health_slider .owl-nav {
           position: absolute;
@@ -154,8 +149,6 @@ export default function HeroSlider({ data }: HeroSliderProps) {
           pointer-events: none;
         }
 
-        .health_slider .owl-prev { left: 20px; }
-        .health_slider .owl-next { right: 20px; }
 
       `}</style>
 
