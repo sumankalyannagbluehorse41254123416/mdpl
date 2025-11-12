@@ -2029,6 +2029,11 @@ ul.pattern li #style {
     .sec_texxt.bodd {
         padding: 0;
     }
+
+    .home_director .sec_texxt.bodd {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
 }
 
 .hs_how_we_are>div>div {
@@ -2372,8 +2377,8 @@ ul.pattern li #style {
 
 @media (max-width:575px) {
     .book-now a {
-        font-size: 20px;
-        padding: 12px 50px;
+        font-size: 16px;
+        padding: 8px 38px;
     }
 }
 

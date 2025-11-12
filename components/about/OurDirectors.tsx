@@ -26,10 +26,10 @@ export default function OurDirectors() {
   ];
 
   return (
-    <div className="container">
-      <div className="">
+    <div className="container home_director">
         <h2 className="our-drt">Our Directors</h2>
-        <div className="col-lg-12 ">
+      <div className="row justify-content-center">
+        <div className="col-lg-9" style={{float:"none",margin:"0 auto"}}>
           <div className="row">
             {directors.map((director) => (
               <div key={director.id} className="col-lg-4 col-md-4 sec_texxt bodd">
