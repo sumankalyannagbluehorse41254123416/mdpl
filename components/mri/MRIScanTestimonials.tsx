@@ -53,7 +53,7 @@
 //       <div className="col-lg-12 col-md-12 col-sm-12">
 //         <h4 className="hs_heading hspt">M.R.I SCAN SERVICES OFFERED BY THESE HOSPITALS</h4>
 //         <h6 className="hs_heading_text">With advanced technology you can get the Most accurate results</h6>
-        
+
 //         <div className="patients_testimonials">           
 //           <div id="patients_testimonials_slider" className="owl-carousel owl-theme owl-loaded owl-drag">
 //             <div className="owl-stage-outer">
@@ -96,7 +96,7 @@
 //             </div>
 //             <div className="owl-dots disabled"></div>
 //           </div>
-          
+
 //           <div className="customNavigation text-right"> 
 //             <a className="btn_prev prev" onClick={prevSlide}>
 //               <i className="fa fa-chevron-left"></i>
@@ -164,70 +164,73 @@ export default function MRIScanTestimonials() {
   }, []);
 
   return (
-    <div className="container">
-      <div className="col-lg-12 col-md-12 col-sm-12">
-        <h4 className="hs_heading hspt">M.R.I SCAN SERVICES OFFERED BY THESE HOSPITALS</h4>
-        <h6 className="hs_heading_text">With advanced technology you can get the Most accurate results</h6>
-        
-        <div className="patients_testimonials">           
-          <div id="patients_testimonials_slider" className="owl-carousel owl-theme owl-loaded owl-drag">
-            <div className="owl-stage-outer" style={{ overflow: "hidden" }}>
-              <div 
-                className="owl-stage" 
-                style={{ 
-                  transform: `translate3d(-${currentSlide * 100}%, 0px, 0px)`,
-                  transition: 'all 0.5s ease',
-                  display: 'flex'
-                }}
-              >
-                {testimonials.map((testimonial, index) => (
-                  <div 
-                    key={testimonial.id}
-                    className={`owl-item ${Math.floor(index / 2) === currentSlide ? 'active' : ''}`}
-                    style={{ 
-                      width: '50%', 
-                      flexShrink: 0,
-                      minWidth: '50%'
-                    }}
-                  >
-                    <div className="patients_testimonials_slider_item" style={{ margin: '0 10px' }}> 
-                      <Image
-                        className="pull-left"
-                        src={testimonial.image}
-                        alt={testimonial.name}
-                        width={80}
-                        height={80}
-                      />
-                      <h4>{testimonial.name}</h4>
-                      <p className="comment">{testimonial.comment}</p>
+    <div className="mri_section">
+      <div className="container">
+        <div className="col-lg-12 col-md-12 col-sm-12 ">
+          <h4 className="hs_heading hspt">M.R.I SCAN SERVICES OFFERED BY THESE HOSPITALS</h4>
+          <h6 className="hs_heading_text">With advanced technology you can get the Most accurate results</h6>
+
+          <div className="patients_testimonials">
+            <div id="patients_testimonials_slider" className="owl-carousel owl-theme owl-loaded owl-drag">
+              <div className="owl-stage-outer" style={{ overflow: "hidden" }}>
+                <div
+                  className="owl-stage"
+                  style={{
+                    transform: `translate3d(-${currentSlide * 100}%, 0px, 0px)`,
+                    transition: 'all 0.5s ease',
+                    display: 'flex'
+                  }}
+                >
+                  {testimonials.map((testimonial, index) => (
+                    <div
+                      key={testimonial.id}
+                      className={`owl-item ${Math.floor(index / 2) === currentSlide ? 'active' : ''}`}
+                      style={{
+                        width: '50%',
+                        flexShrink: 0,
+                        minWidth: '50%'
+                      }}
+                    >
+                      <div className="patients_testimonials_slider_item" style={{ margin: '0 10px', display:"flex" }}>
+                        <Image
+                          className="pull-left"
+                          src={testimonial.image}
+                          alt={testimonial.name}
+                          width={80}
+                          height={80}
+                        />
+                        <div className="mri_testimonial">
+                          <h4>{testimonial.name}</h4>
+                          <p className="comment">{testimonial.comment}</p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
+              <div className="owl-nav disabled">
+                <button type="button" role="presentation" className="owl-prev">
+                  <span aria-label="Previous">‹</span>
+                </button>
+                <button type="button" role="presentation" className="owl-next">
+                  <span aria-label="Next">›</span>
+                </button>
+              </div>
+              <div className="owl-dots disabled"></div>
             </div>
-            <div className="owl-nav disabled">
-              <button type="button" role="presentation" className="owl-prev">
-                <span aria-label="Previous">‹</span>
-              </button>
-              <button type="button" role="presentation" className="owl-next">
-                <span aria-label="Next">›</span>
-              </button>
+
+            <div className="customNavigation text-right">
+              <a className="btn_prev prev" onClick={prevSlide}>
+                <i className="fa fa-chevron-left"></i>
+              </a>
+              <a className="btn_next next" onClick={nextSlide}>
+                <i className="fa fa-chevron-right"></i>
+              </a>
             </div>
-            <div className="owl-dots disabled"></div>
-          </div>
-          
-          <div className="customNavigation text-right"> 
-            <a className="btn_prev prev" onClick={prevSlide}>
-              <i className="fa fa-chevron-left"></i>
-            </a> 
-            <a className="btn_next next" onClick={nextSlide}>
-              <i className="fa fa-chevron-right"></i>
-            </a> 
           </div>
         </div>
-      </div>
 
-      <style jsx>{`
+        <style jsx>{`
         .owl-stage-outer {
           position: relative;
           width: 100%;
@@ -242,14 +245,16 @@ export default function MRIScanTestimonials() {
    
         .customNavigation a {
           display: inline-block;
-          margin: 0 10px;
+          margin: 0 3px;
           cursor: pointer;
           transition: background 0.3s ease;
         }
-       
+       .btn_prev, .btn_next{
+           padding:2px 5px;
+       }
         
         /* Mobile: 1 slide */
-        @media (max-width: 767px) {
+        @media (max-width: 991px) {
           .owl-item {
             width: 100% !important;
             min-width: 100% !important;
@@ -260,7 +265,7 @@ export default function MRIScanTestimonials() {
         }
         
         /* Tablet and Desktop: 2 slides */
-        @media (min-width: 768px) {
+        @media (min-width: 992px) {
           .owl-item {
             width: 50% !important;
             min-width: 50% !important;
@@ -270,6 +275,7 @@ export default function MRIScanTestimonials() {
           }
         }
       `}</style>
+      </div>
     </div>
   );
 }

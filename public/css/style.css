@@ -1514,6 +1514,12 @@ ul.pattern li #style {
 	height: 210px;
 }
 
+@media (max-width:767px){
+    .hs_page_cost img{
+        position: relative;
+    }
+}
+
 .hs_page_cost_text{
 	position: absolute;
     background: #00ac7a96;
@@ -1521,6 +1527,12 @@ ul.pattern li #style {
     color: #ffffff;
     display: block;
     right: 0;
+}
+
+@media (max-width:767px){
+    .hs_page_cost_text{
+        top: 0;
+    }
 }
 
 .hs_page_name{
@@ -1828,6 +1840,13 @@ ul.pattern li #style {
     -o-transition: all 0.5s;
 }
 
+#our_doctor_team_slider .owl-dots button{
+    background-color: #000;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
 
 /******************** Our Doctor Team end ***********************/
 
@@ -2370,7 +2389,9 @@ ul.pattern li #style {
 .bx-clone {
     display: block;
 }
-
+.mri_section{
+    padding-bottom: 35px;
+}
 .testimonial ul li {
     width: 100% !important;
     float: left !important;
@@ -3683,7 +3704,35 @@ div[data-target]>div {
     -moz-transition: all 0.5s;
     -ms-transition: all 0.5s;
     -o-transition: all 0.5s;
-    height: 200px;
+    min-height: 225px;
+    /* aspect-ratio: 1/1; */
+}
+
+@media (max-width:1199px){
+    #patients_testimonials_slider .patients_testimonials_slider_item{
+        min-height: 295px;
+    }
+}
+
+@media (max-width:991px){
+    #patients_testimonials_slider .patients_testimonials_slider_item{
+        min-height: 185px;
+    }
+}
+
+
+
+@media (max-width:575px){
+    #patients_testimonials_slider .patients_testimonials_slider_item{
+        flex-direction: column;
+    }
+    #patients_testimonials_slider .patients_testimonials_slider_item img{
+        margin: 0 auto 15px;
+        margin-right: auto !important;
+    }
+    .mri_testimonial{
+        text-align: center;
+    }
 }
 
 #patients_testimonials_slider .patients_testimonials_slider_item:hover {
@@ -6586,6 +6635,10 @@ li.hc-home-new:after {
     .hlc_slider_details img {
         height: 220px;
     }
+
+    .hs_heading.hspt{
+        margin: 0px 0 0;
+    }
 }
 
 @media (max-width: 560px) {
@@ -6695,6 +6748,7 @@ li.hc-home-new:after {
 
 
 /* Landscape phones and down */
+
 
 @media (max-width: 480px) {
     .carousel-inner>.item>a>img,
