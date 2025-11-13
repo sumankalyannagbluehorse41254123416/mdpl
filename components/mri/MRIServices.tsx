@@ -1,66 +1,94 @@
-import { useState } from 'react';
+"use client";
 
-const MRIServices = () => {
-  const [activeTab, setActiveTab] = useState('newtab-0');
+import { useState } from "react";
+import Image from "next/image";
 
-  const hospitals = [
-    {
-      id: 'newtab-0',
-      name: '1. R.G.KAR MEDICAL COLLEGE & HOSPITAL',
-      image: '/images/1655882176311.jpg',
-      price: 'Rs. 2250/-(BRAIN/BODY PART)'
-    },
-    {
-      id: 'newtab-1',
-      name: '2. CALCUTTA NATIONAL MEDICAL COLLEGE & HOSPITAL',
-      image: '/images/1655886451062.jpg',
-      price: 'Rs. 2050/-(BRAIN/BODY PART)'
-    }
-  ];
+interface Section {
+  id?: number;
+  title?: string;
+  shortDescription?: string;
+  description?: string;
+  image?: string;
+  subsections?: Section[];
+}
+
+interface MRIServicesProps {
+  section?: Section;
+}
+
+const MRIServices: React.FC<MRIServicesProps> = ({ section }) => {
+  const [activeTab, setActiveTab] = useState("newtab-0");
+
+  const hospitals = section?.subsections || [];
 
   return (
     <div className="container">
       <div className="row hs_page_mri_module">
+        {/* LEFT SIDE — Titles and Tabs */}
         <div className="col-md-7 col-lg-7 col-sm-6 hs_page_mri_service">
-          <h3>We are successfully running MRI services (1.5 Tesla MRI Machine of Wipro GE, USA) at a very responsible cost of at:-</h3>
+          <h3>{section?.title}</h3>
           <div className="hs_page_mri-clg">
             <ul className="nav nav-tabs hs_page_cost">
-              {hospitals.map((hospital) => (
-                <li 
-                  key={hospital.id} 
-                  className={activeTab === hospital.id ? 'active' : ''}
-                >
-                  <a 
-                    href={`#${hospital.id}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setActiveTab(hospital.id);
-                    }}
+              {hospitals.map((hospital, index) => {
+                const tabId = `newtab-${index}`;
+                return (
+                  <li
+                    key={tabId}
+                    className={activeTab === tabId ? "active" : ""}
                   >
-                    {hospital.name}
-                  </a>
-                </li>
-              ))}
+                    <a
+                      href={`#${tabId}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setActiveTab(tabId);
+                      }}
+                    >
+                      {hospital.title}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>
-        
+
+        {/* RIGHT SIDE — Images and Prices */}
         <div className="col-md-5 col-lg-5 col-sm-6">
-          {hospitals.map((hospital) => (
-            <div 
-              key={hospital.id}
-              className={`hs_page_cost tab-pane ${activeTab === hospital.id ? 'active in' : 'fade'}`}
-              style={{ display: activeTab === hospital.id ? 'block' : 'none' }}
-            >
-              <img 
-                src={hospital.image} 
-                alt={hospital.name}
-              />
-              <div className="hs_page_cost_text">
-                <p>{hospital.price}</p>
+          {hospitals.map((hospital, index) => {
+            const tabId = `newtab-${index}`;
+            return (
+              <div
+                key={tabId}
+                className={`hs_page_cost tab-pane ${
+                  activeTab === tabId ? "active in" : "fade"
+                }`}
+                style={{
+                  display: activeTab === tabId ? "block" : "none",
+                }}
+              >
+                {hospital.image && (
+                  <div className="hs_page_cost_img">
+                    <Image
+                      src={hospital.image}
+                      alt={hospital.title || "MRI hospital"}
+                      width={500}
+                      height={350}
+                      className="img-fluid rounded shadow-sm"
+                      priority={activeTab === tabId}
+                    />
+                  </div>
+                )}
+                <div className="hs_page_cost_text">
+                  {/* ✅ Fix: Render description HTML safely */}
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: hospital.description || "",
+                    }}
+                  />
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
