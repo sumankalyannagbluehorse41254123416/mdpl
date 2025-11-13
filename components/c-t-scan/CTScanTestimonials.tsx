@@ -259,7 +259,9 @@ export default function CTScanTestimonials() {
                       padding:2px 5px;
                   }
         
-      `}</style>
+            `     
+            }
+            </style>
           </div>
         </div>
       </div>
