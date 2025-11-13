@@ -4,65 +4,67 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 
 interface Testimonial {
   id: number;
-  title: string; // author name
-  description: string; // testimonial text
+  title: string;
+  description: string;
 }
 
 interface TestimonialsData {
-  title: string; // section title
+  title: string;
   subsections: Testimonial[];
 }
 
-// ✅ Helper to clean text
 function decodeHtmlEntities(str: string) {
   if (!str) return "";
   return str
-    .replace(/&nbsp;/g, " ")   // replace non-breaking spaces
-    .replace(/&amp;/g, "&")    // replace ampersand
-    .replace(/&lt;/g, "<")     // replace less-than
-    .replace(/&gt;/g, ">")     // replace greater-than
-    .replace(/&quot;/g, '"')   // replace double quote
-    .replace(/&#39;/g, "'")    // replace single quote
-    .trim();                   // remove leading/trailing spaces
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .trim();
 }
 
 export default function ClientTestimonials({ data }: { data: TestimonialsData }) {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const stageOuterRef = useRef<HTMLDivElement>(null);
+  const [currentSlide, setCurrentSlide] = useState(1); // start from 1 because of clone
+  const [isTransitioning, setIsTransitioning] = useState(true);
   const [visibleCount, setVisibleCount] = useState(1);
   const [itemWidth, setItemWidth] = useState(555);
+  const stageOuterRef = useRef<HTMLDivElement>(null);
 
   const testimonials = data.subsections || [];
 
-  // ✅ Prevent recreation using useCallback
+  // duplicate first and last slides for infinite loop
+  const extendedSlides = [
+    testimonials[testimonials.length - 1],
+    ...testimonials,
+    testimonials[0],
+  ];
+
   const nextSlide = useCallback(() => {
-    setCurrentSlide((prev) =>
-      prev >= testimonials.length - visibleCount ? 0 : prev + 1
-    );
-  }, [testimonials.length, visibleCount]);
+    setCurrentSlide((prev) => prev + 1);
+    setIsTransitioning(true);
+  }, []);
 
   const prevSlide = useCallback(() => {
-    setCurrentSlide((prev) =>
-      prev === 0 ? testimonials.length - visibleCount : prev - 1
-    );
-  }, [testimonials.length, visibleCount]);
+    setCurrentSlide((prev) => prev - 1);
+    setIsTransitioning(true);
+  }, []);
 
-  // ✅ Auto-play
+  // Auto-play
   useEffect(() => {
     const interval = setInterval(nextSlide, 5000);
     return () => clearInterval(interval);
   }, [nextSlide]);
 
-  // ✅ Responsive item width calculation
+  // Responsive width setup
   useEffect(() => {
     const calc = () => {
       if (!stageOuterRef.current) return;
-
       const containerW = stageOuterRef.current.clientWidth;
       const itemMargin = 30;
       const isDesktop = window.innerWidth >= 992;
       const count = isDesktop ? 2 : 1;
-
       const width = (containerW - (count - 1) * itemMargin) / count;
 
       setVisibleCount(count);
@@ -82,8 +84,26 @@ export default function ClientTestimonials({ data }: { data: TestimonialsData })
 
   const itemMargin = 30;
   const totalItemWidth = itemWidth + itemMargin;
-  const stageWidth = totalItemWidth * testimonials.length;
+  const stageWidth = totalItemWidth * extendedSlides.length;
   const translateX = -currentSlide * totalItemWidth;
+
+  // ✅ Handle infinite loop reset (no flicker)
+  const handleTransitionEnd = () => {
+    if (currentSlide === extendedSlides.length - 1) {
+      setIsTransitioning(false);
+      setCurrentSlide(1); // jump to first real
+    } else if (currentSlide === 0) {
+      setIsTransitioning(false);
+      setCurrentSlide(extendedSlides.length - 2); // jump to last real
+    }
+  };
+
+  useEffect(() => {
+    if (!isTransitioning) {
+      const timeout = setTimeout(() => setIsTransitioning(true), 50);
+      return () => clearTimeout(timeout);
+    }
+  }, [isTransitioning]);
 
   if (!testimonials.length) return null;
 
@@ -103,21 +123,18 @@ export default function ClientTestimonials({ data }: { data: TestimonialsData })
               <div className="owl-stage-outer" ref={stageOuterRef}>
                 <div
                   className="owl-stage"
+                  onTransitionEnd={handleTransitionEnd}
                   style={{
                     display: "flex",
                     transform: `translate3d(${translateX}px, 0px, 0px)`,
-                    transition: "0.45s",
+                    transition: isTransitioning ? "transform 0.45s ease" : "none",
                     width: `${stageWidth}px`,
                   }}
                 >
-                  {testimonials.map((testimonial, index) => (
+                  {extendedSlides.map((testimonial, index) => (
                     <div
-                      key={testimonial.id}
-                      className={`owl-item ${
-                        index >= currentSlide && index < currentSlide + visibleCount
-                          ? "active"
-                          : ""
-                      }`}
+                      key={index}
+                      className="owl-item"
                       style={{
                         flex: `0 0 ${itemWidth}px`,
                         width: `${itemWidth}px`,
