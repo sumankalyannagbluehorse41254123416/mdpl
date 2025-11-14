@@ -3,55 +3,53 @@
 import React, { useState } from "react";
 import Image from "next/image";
 
-export default function DigitalXRayServices() {
-  const [activeTab, setActiveTab] = useState("newtab-4");
+interface Section {
+  id?: number;
+  title?: string;
+  shortDescription?: string;
+  description?: string;
+  image?: string;
+  subsections?: {
+    title?: string;
+    description?: string;
+    image?: string;
+  }[];
+}
 
-  const hospitals = [
-    {
-      id: "newtab-0",
-      name: "1. R.G.KAR MEDICAL COLLEGE & HOSPITAL",
-      image: "/images/1655892456476.jpeg",
-      price: "Rs. 100/-(CHEST)"
-    },
-    {
-      id: "newtab-1",
-      name: "2. CALCUTTA NATIONAL MEDICAL COLLEGE &HOSPITAL",
-      image: "/images/1655892620200.jpg",
-      price: "Rs. 100/-(CHEST)"
-    },
-    {
-      id: "newtab-2",
-      name: "3. COLLEGE OF MEDICINE & SAGOREDUTTA HOSPITAL",
-      image: "/images/1655892698488.jpg",
-      price: "Rs. 100/-(CHEST)"
-    },
-    {
-      id: "newtab-3",
-      name: "4. HOWRAH DISTRICT HOSPITAL",
-      image: "/images/1655892751191.jpeg",
-      price: "Rs. 100/-(CHEST)"
-    },
-    {
-      id: "newtab-4",
-      name: "5. MIDNAPORE MEDICAL COLLEGE AND HOSPITAL",
-      image: "/images/1655892809180.jpeg",
-      price: "Rs. 100/-(CHEST)"
-    }
-  ];
+const cleanText = (text: string = "") =>
+  text
+    .replace(/&nbsp;/gi, " ")     // remove &nbsp;
+    .replace(/<\/?p[^>]*>/g, "")  // remove <p> </p>
+    .replace(/<[^>]*>/g, "")      // remove HTML tags
+    .trim();
+
+export default function DigitalXRayServices({ section }: { section?: Section }) {
+  const [activeTab, setActiveTab] = useState("newtab-0");
+
+  const hospitals = (section?.subsections || []).map((sub, index) => ({
+    id: `newtab-${index}`,
+    name: cleanText(sub.title || `Hospital ${index + 1}`),
+    image: sub.image || "/images/default.jpg",
+    price: cleanText(sub.description || "Price not available")
+  }));
 
   return (
     <div className="container">
       <div className="row hs_page_mri_module">
+
         <div className="col-md-7 col-lg-7 col-sm-6 hs_page_mri_service">
-          <h3>We have installed latest state-of-art Digital X-Ray (DR) of AFGA DX-600  at following Medical  colleges in joint venture project under PPP Model with department of Health & Family Welfare, Government of West Bengal</h3>
+          <h3>
+            {cleanText(section?.title || "Digital X-Ray services information goes here...")}
+          </h3>
+
           <div className="hs_page_mri-clg nav nav-tabs">
             <ul className="nav nav-tabs hs_page_cost">
               {hospitals.map((hospital) => (
-                <li 
-                  key={hospital.id} 
+                <li
+                  key={hospital.id}
                   className={activeTab === hospital.id ? "active" : ""}
                 >
-                  <a 
+                  <a
                     href={`#${hospital.id}`}
                     onClick={(e) => {
                       e.preventDefault();
@@ -66,12 +64,14 @@ export default function DigitalXRayServices() {
             </ul>
           </div>
         </div>
-        
+
         <div className="col-md-5 col-lg-5 col-sm-6 tab-content">
           {hospitals.map((hospital) => (
-            <div 
+            <div
               key={hospital.id}
-              className={`hs_page_cost tab-pane fade ${activeTab === hospital.id ? "active in" : ""}`}
+              className={`hs_page_cost tab-pane fade ${
+                activeTab === hospital.id ? "active in" : ""
+              }`}
               style={{ display: activeTab === hospital.id ? "block" : "none" }}
             >
               <Image
@@ -81,12 +81,14 @@ export default function DigitalXRayServices() {
                 height={300}
                 className="img-fluid"
               />
+
               <div className="hs_page_cost_text">
                 <p>{hospital.price}</p>
               </div>
             </div>
           ))}
         </div>
+
       </div>
     </div>
   );

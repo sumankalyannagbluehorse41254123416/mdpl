@@ -3,22 +3,23 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
-// ✅ Helper: decode & strip empty <p></p> or HTML tags
+// ================================================
+// CLEAN HTML TEXT (remove <p>, &nbsp;, etc.)
+// ================================================
 const decodeHTML = (text: string = ""): string => {
   if (!text) return "";
 
   return text
-    .replace(/&nbsp;/g, " ") // replace non-breaking spaces
+    .replace(/&nbsp;/g, " ")
     .replace(/&amp;/g, "&")
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
-    .replace(/<p>\s*<\/p>/g, "") // remove empty <p></p> tags
-    .replace(/<\/?[^>]+(>|$)/g, "") // strip all HTML tags
-    .trim(); // remove leading/trailing whitespace
+    .replace(/<p>\s*<\/p>/g, "")
+    .replace(/<\/?[^>]+(>|$)/g, "")
+    .trim();
 };
-
 
 interface Subsection {
   id?: number | string;
@@ -36,7 +37,7 @@ interface HeroSliderProps {
 export default function HeroSlider({ data }: HeroSliderProps) {
   const subsections = data?.subsections || [];
 
-  // ✅ If CMS subsections exist, use them; else fallback to static slides
+  // Use CMS slides OR fallback static slides
   const slides =
     subsections.length > 0
       ? subsections.map((sub, index) => ({
@@ -71,7 +72,7 @@ export default function HeroSlider({ data }: HeroSliderProps) {
   const [currentSlide, setCurrentSlide] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(true);
 
-  // ✅ Create extended slides array with clones for infinite loop
+  // Create extended slide list for infinite loop
   const extendedSlides = [
     slides[slides.length - 1],
     ...slides,
@@ -88,7 +89,7 @@ export default function HeroSlider({ data }: HeroSliderProps) {
     setCurrentSlide((prev) => prev - 1);
   };
 
-  // ✅ Infinite loop effect
+  // Fix infinite loop jump
   useEffect(() => {
     if (currentSlide === slides.length + 1) {
       setTimeout(() => {
@@ -103,17 +104,15 @@ export default function HeroSlider({ data }: HeroSliderProps) {
     }
   }, [currentSlide, slides.length]);
 
-  // ✅ Auto-play every 5s
+  // Autoplay every 5 seconds
   useEffect(() => {
-    const interval = setInterval(() => {
-      nextSlide();
-    }, 5000);
+    const interval = setInterval(nextSlide, 5000);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <>
-        {/* ============ ADD THIS CSS ONCE (globals.css or inside <style> tag) ============ */}
+      {/* ===================== GLOBAL SLIDER CSS ===================== */}
       <style jsx global>{`
         .health_slider {
           position: relative;
@@ -137,8 +136,8 @@ export default function HeroSlider({ data }: HeroSliderProps) {
           position: relative;
           padding-top: 60px;
         }
-    
-      
+
+        /* ============ FIXED — WORKING PREV/NEXT BUTTONS ============ */
         .health_slider .owl-nav {
           position: absolute;
           top: 50%;
@@ -146,30 +145,39 @@ export default function HeroSlider({ data }: HeroSliderProps) {
           transform: translateY(-50%);
           display: flex;
           justify-content: space-between;
-          pointer-events: none;
+          z-index: 20;
         }
-
-
+        .health_slider .owl-nav button {
+          pointer-events: all;
+          background: rgba(0, 0, 0, 0.4);
+          color: #fff;
+          border: none;
+          padding: 12px 18px;
+          font-size: 32px;
+          cursor: pointer;
+          border-radius: 50%;
+          transition: 0.2s ease-in-out;
+        }
+        .health_slider .owl-nav button:hover {
+          background: rgba(0, 0, 0, 0.7);
+        }
       `}</style>
 
+      {/* ===================== SLIDER HTML ===================== */}
       <div className="health_slider">
         <div className="owl-carousel owl-theme owl-loaded owl-drag">
           <div className="owl-stage-outer">
             <div
               className="owl-stage"
               style={{
-                transform: `translate3d(-${currentSlide * 100}%, 0px, 0px)`,
-                transition: isTransitioning
-                  ? "transform 0.5s ease-in-out"
-                  : "none",
+                transform: `translate3d(-${currentSlide * 100}%, 0, 0)`,
+                transition: isTransitioning ? "transform 0.5s ease-in-out" : "none",
               }}
             >
               {extendedSlides.map((slide, index) => (
                 <div
                   key={`${slide.id}-${index}`}
-                  className={`owl-item ${
-                    index === currentSlide ? "active" : ""
-                  }`}
+                  className={`owl-item ${index === currentSlide ? "active" : ""}`}
                 >
                   <div className="item">
                     <div className="hlc_slider_details">
@@ -208,21 +216,12 @@ export default function HeroSlider({ data }: HeroSliderProps) {
             </div>
           </div>
 
+          {/* Prev / Next Buttons */}
           <div className="owl-nav">
-            <button
-              type="button"
-              role="presentation"
-              className="owl-prev"
-              onClick={prevSlide}
-            >
+            <button className="owl-prev" onClick={prevSlide}>
               <span aria-label="Previous">‹</span>
             </button>
-            <button
-              type="button"
-              role="presentation"
-              className="owl-next"
-              onClick={nextSlide}
-            >
+            <button className="owl-next" onClick={nextSlide}>
               <span aria-label="Next">›</span>
             </button>
           </div>
