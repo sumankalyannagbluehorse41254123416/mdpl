@@ -2,14 +2,31 @@
 
 import React from "react";
 
-export default function MidnaporeMedicalContent() {
+interface Section {
+  title?: string;
+  shortDescription?: string;
+}
+
+// Remove HTML tags like <p>, <strong>, <br>, etc.
+const stripHtml = (html: string = "") => {
+  return html.replace(/<[^>]+>/g, "").trim();
+};
+
+export default function MidnaporeMedicalContent({ section }: { section?: Section }) {
+  const cleanText = stripHtml(section?.shortDescription || "");
+
   return (
     <div className="container">
       <div className="row">
-        <div className="col-md-12 col-lg-12 col-sm-6 mb-4">
+        <div className="col-md-12 col-lg-12 col-sm-12 mb-4">
           <div className="m-r-i-text">
-            <h3 className="m-top text-center">Midnapore Medical College and Hospital</h3>
-            <p>Located in Midnapore (West Bengal), Midnapore Medical College and Hospital was established in 2004. Earlier, the college was known as Midnapur Sadar Hospital, West Midnapur, but to provide medical study to the young generation, the Government of West Bengal changed its name</p>
+            <h3 className="m-top text-center">
+              {section?.title || "Midnapore Medical College and Hospital"}
+            </h3>
+
+            <p>
+              {cleanText || "Content not available at the moment."}
+            </p>
           </div>
         </div>
       </div>
