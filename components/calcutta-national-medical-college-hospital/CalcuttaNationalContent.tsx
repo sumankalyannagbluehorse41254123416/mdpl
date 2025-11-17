@@ -2,14 +2,31 @@
 
 import React from "react";
 
-export default function CalcuttaNationalContent() {
+interface Section {
+  title?: string;
+  shortDescription?: string;
+}
+
+// Remove HTML tags like <p>, <strong>, <br>, etc.
+const stripHtml = (html: string = "") => {
+  return html.replace(/<[^>]+>/g, "").trim();
+};
+
+export default function CalcuttaNationalContent({ section }: { section?: Section }) {
+  const cleanText = stripHtml(section?.shortDescription || "");
+
   return (
     <div className="container">
       <div className="row">
-        <div className="col-md-12 col-lg-12 col-sm-6 mb-4">
+        <div className="col-md-12 col-lg-12 col-sm-12 mb-4">
           <div className="m-r-i-text">
-            <h3 className="m-top text-center">Calcutta National Medical College & Hospital</h3>
-            <p>Calcutta National Medical College is locally known as Chittaranjan hospital. It was established in 1948. In 1967 the institute was nationalized. The college is accredited by the Medical Council of India (MCI).One of the seven medical colleges in Kolkata, Calcutta National Medical College has its origin in the National Medical Institute</p>
+            <h3 className="m-top text-center">
+              {section?.title || "Calcutta National Medical College & Hospital"}
+            </h3>
+
+            <p>
+              {cleanText || "Content not available at the moment."}
+            </p>
           </div>
         </div>
       </div>
