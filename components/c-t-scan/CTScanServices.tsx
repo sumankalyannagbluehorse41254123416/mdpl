@@ -3,71 +3,89 @@
 import React, { useState } from "react";
 import Image from "next/image";
 
-export default function CTScanServices() {
-  const [activeTab, setActiveTab] = useState("newtab-0");
+interface SubSection {
+  id?: number | string;
+  title?: string;
+  image?: string;
+  description?: string;
+}
 
-  const hospitals = [
-    {
-      id: "newtab-0",
-      name: "1. R.G.Kar Medical College & Hospital",
-      image: "/images/1655888108485.jpg",
-      price: "Rs. 500/-(BRAIN)"
-    },
-    {
-      id: "newtab-1",
-      name: "2. College of Medicine & Sagore Dutta Hospital",
-      image: "/images/1655888178822.jpg",
-      price: "Rs. 250/-(BRAIN)"
-    }
-  ];
+interface Section {
+  title?: string;
+  subsections?: SubSection[];
+}
+
+function cleanText(text: string = "") {
+  return text
+    .replace(/<[^>]*>/g, "")     // remove any <p> <br> etc
+    .replace(/&nbsp;/g, " ")     // remove &nbsp;
+    .replace(/\s+/g, " ")        // remove extra white space
+    .replace(/nn+/gi, "")        // remove "nn"
+    .trim();                     // final clean
+}
+
+export default function CTScanServices({ section = {} }: { section?: Section }) {
+  const tabs = section.subsections || [];
+
+  const [activeTab, setActiveTab] = useState(
+    tabs.length > 0 ? `newtab-0` : ""
+  );
 
   return (
     <div className="container">
       <div className="row hs_page_mri_module">
+
         <div className="col-md-7 col-lg-7 col-sm-6 hs_page_mri_service">
-          <h3>We are successfully running CT Scan Services under PPP module with govt. of West Bengal at a very responsible cost of at:-</h3>
+          <h3>{section.title}</h3>
+
           <div className="hs_page_mri-clg nav nav-tabs">
             <ul className="nav nav-tabs hs_page_cost">
-              {hospitals.map((hospital) => (
-                <li 
-                  key={hospital.id} 
-                  className={activeTab === hospital.id ? "active" : ""}
+              {tabs.map((sub, index) => (
+                <li
+                  key={index}
+                  className={activeTab === `newtab-${index}` ? "active" : ""}
                 >
-                  <a 
-                    href={`#${hospital.id}`}
+                  <a
+                    href={`#newtab-${index}`}
                     onClick={(e) => {
                       e.preventDefault();
-                      setActiveTab(hospital.id);
+                      setActiveTab(`newtab-${index}`);
                     }}
                   >
-                    {hospital.name}
+                    {sub.title}
                   </a>
                 </li>
               ))}
             </ul>
           </div>
         </div>
-        
+
         <div className="col-md-5 col-lg-5 col-sm-6 tab-content">
-          {hospitals.map((hospital) => (
-            <div 
-              key={hospital.id}
-              className={`hs_page_cost tab-pane fade ${activeTab === hospital.id ? "active in" : ""}`}
-              style={{ display: activeTab === hospital.id ? "block" : "none" }}
+          {tabs.map((sub, index) => (
+            <div
+              key={index}
+              className={`hs_page_cost tab-pane fade ${
+                activeTab === `newtab-${index}` ? "active in" : ""
+              }`}
+              style={{
+                display: activeTab === `newtab-${index}` ? "block" : "none",
+              }}
             >
               <Image
-                src={hospital.image}
-                alt={hospital.name}
+                src={sub.image || "/images/default.jpeg"}
+                alt={sub.title || ""}
                 width={400}
                 height={300}
                 className="img-fluid"
               />
+
               <div className="hs_page_cost_text">
-                <p>{hospital.price}</p>
+                <p>{cleanText(sub.description || "")}</p>
               </div>
             </div>
           ))}
         </div>
+
       </div>
     </div>
   );
