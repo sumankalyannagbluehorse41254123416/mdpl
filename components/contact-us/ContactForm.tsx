@@ -2,91 +2,226 @@
 
 import React, { useState } from "react";
 
-export default function ContactForm() {
+// --------------------
+// CMS Types
+// --------------------
+interface Section {
+  id?: number;
+  title?: string;
+  shortDescription?: string;
+  description?: string;
+  image?: string;
+  bannerImage?: string;
+  subsections?: Section[];
+  [key: string]: unknown;
+}
+
+interface FormField {
+  id: string;
+  type: string;
+  label: string;
+  placeholder?: string;
+  required?: boolean;
+  options?: string[];
+  [key: string]: unknown;
+}
+
+interface FormData {
+  id?: string;
+  title?: string;
+  [key: string]: unknown;
+}
+
+interface ContactFormProps {
+  section?: Section;
+  serviceSections?: Section[];
+  form?: FormData;
+  fields?: FormField[];
+}
+
+// --------------------
+// Clean unwanted HTML
+// --------------------
+const cleanHTML = (text: string = ""): string => {
+  return text
+    .replace(/<a[^>]*>(.*?)<\/a>/gi, "$1")
+    .replace(/<p[^>]*>/gi, "")
+    .replace(/<\/p>/gi, "")
+    .replace(/<[^>]+>/g, "")
+    .replace(/&nbsp;/g, " ")
+    .trim();
+};
+
+export default function ContactForm({
+  section,
+  serviceSections = [],
+  form,
+  fields = [],
+}: ContactFormProps) {
   const [activeTab, setActiveTab] = useState("newscan-0");
   const [selectedPrice, setSelectedPrice] = useState("");
+  const [formData, setFormData] = useState<Record<string, string>>({});
 
-  const services = [
-    {
-      id: "newscan-0",
-      name: "C.T.SCAN",
-      hospitals: [
-        { value: "Rs.150/-", label: "R.G.KAR MEDICAL COLLEGE AND HOSPITAL" },
-        { value: "Rs.200/-", label: "COLLEGE OF MEDICINE AND SAGOREDUTTA HOSPITAL" }
-      ]
-    },
-    {
-      id: "newscan-1",
-      name: "M.R.I SCAN",
-      hospitals: [
-        { value: "Rs.150/-", label: "R.G.KAR MEDICAL COLLEGE AND HOSPITAL" },
-        { value: "Rs.250/-", label: "CALCUTTA NATIONAL MEDICAL COLLEGE AND HOSPITAL" }
-      ]
-    },
-    {
-      id: "newscan-2",
-      name: "DIGITAL X-RAY",
-      hospitals: [
-        { value: "Rs.150/-", label: "R.G.KAR MEDICAL COLLEGE AND HOSPITAL" },
-        { value: "Rs.100/-", label: "COLLEGE OF MEDICINE AND SAGOREDUTTA HOSPITAL" },
-        { value: "Rs.300/-", label: "HOWRAH DISTRICT HOSPITAL" },
-        { value: "Rs.350/-", label: "MIDNAPORE MEDICAL COLLEGE AND HOSPITAL" },
-        { value: "Rs.450/-", label: "CALCUTTA NATIONAL MEDICAL COLLEGE AND HOSPITAL" }
-      ]
-    }
-  ];
+  // -------------------------------
+  // Dynamic CMS Services
+  // -------------------------------
+  const services = serviceSections.map((svc, i) => ({
+    id: `newscan-${i}`,
+    name: cleanHTML(svc?.title || `Service ${i + 1}`),
+    hospitals: (svc?.subsections || []).map((sub) => ({
+      label: cleanHTML(sub?.title || ""),
+      value: cleanHTML(sub?.description || ""),
+    })),
+  }));
 
-  const handleHospitalChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value;
-    setSelectedPrice(value);
+  // -------------------------------
+  // Handle form change
+  // -------------------------------
+  const handleInputChange = (fieldId: string, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      [fieldId]: value,
+    }));
   };
 
+  const handleHospitalChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedPrice(e.target.value);
+  };
+
+  // -------------------------------
+  // Render form field WITH unique key
+  // -------------------------------
+  const renderFormField = (field: FormField, index: number) => {
+    const fieldKey = `${field.id}-${index}`;
+
+    const commonProps = {
+      id: fieldKey,
+      name: fieldKey,
+      className: "form-control",
+      placeholder: field.placeholder || "",
+      required: field.required || false,
+      value: formData[fieldKey] || "",
+      onChange: (
+        e: React.ChangeEvent<
+          HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+        >
+      ) => handleInputChange(fieldKey, e.target.value),
+    };
+
+    switch (field.type) {
+      case "text":
+      case "email":
+      case "tel":
+        return <input type={field.type} {...commonProps} />;
+
+      case "textarea":
+        return <textarea rows={4} {...commonProps} />;
+
+      case "select":
+        return (
+          <select {...commonProps}>
+            <option value="">Select {field.label}</option>
+            {field.options?.map((option, i) => (
+              <option key={i} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        );
+
+      case "date":
+        return <input type="date" {...commonProps} />;
+
+      default:
+        return <input type="text" {...commonProps} />;
+    }
+  };
+
+  // -------------------------------
+  // Group fields
+  // -------------------------------
+  const basicFields = fields.filter((f) =>
+    ["text", "email", "tel", "date"].includes(f.type)
+  );
+  const messageField = fields.find((f) => f.type === "textarea");
+  const selectFields = fields.filter((f) => f.type === "select");
+
+  // -------------------------------
+  // JSX
+  // -------------------------------
   return (
     <div className="container">
       <div className="row">
+        {/* LEFT FORM AREA */}
         <div className="col-lg-8 col-md-7 col-sm-7">
-          <h4 className="hs_heading">Leave a Message</h4>
-          <form className="hs_comment_form" action="https://www.mdpl.co/home/save" method="POST">
-            <input type="hidden" name="_token" value="yfi6pGTwaeeufDLN7W4cNXOLJRiINxkVYGpdwXPB" />
+          <h4 className="hs_heading">{form?.title || "Leave a Message"}</h4>
+
+          <form
+            className="hs_comment_form"
+            action="https://www.mdpl.co/home/save"
+            method="POST"
+          >
+            <input
+              type="hidden"
+              name="_token"
+              value="yfi6pGTwaeeufDLN7W4cNXOLJRiINxkVYGpdwXPB"
+            />
+
             <div className="row">
-              <div className="col-lg-6 col-md-6 col-sm-12">
-                <div className="input-group">
-                  <span className="input-group-btn">
-                    <button className="btn btn-success" type="button"><i className="fa fa-user"></i></button>
-                  </span>
-                  <input id="name" name="fname" type="text" className="form-control" placeholder="Full Name" pattern="^[a-zA-Z\s]{1,100}$" />
+              {/* BASIC FIELDS */}
+              {basicFields.map((field, index) => (
+                <div
+                  key={`${field.id}-${index}`}
+                  className="col-lg-6 col-md-6 col-sm-12"
+                >
+                  <div className="input-group">
+                    <span className="input-group-btn">
+                      <button className="btn btn-success" type="button">
+                        <i
+                          className={`fa fa-${
+                            field.type === "email"
+                              ? "envelope"
+                              : field.type === "tel"
+                              ? "phone"
+                              : field.type === "date"
+                              ? "calendar"
+                              : "user"
+                          }`}
+                        ></i>
+                      </button>
+                    </span>
+
+                    {renderFormField(field, index)}
+                  </div>
                 </div>
-              </div>
-              <div className="col-lg-6 col-md-6 col-sm-12">
-                <div className="input-group">
-                  <span className="input-group-btn">
-                    <button className="btn btn-success" type="button"><i className="fa fa-envelope"></i></button>
-                  </span>
-                  <input id="email" name="email" type="text" className="form-control" placeholder="Email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" />
-                </div>
-              </div>
-              <div className="col-lg-6 col-md-6 col-sm-12">
-                <div className="input-group">
-                  <input type="date" id="datePicker" name="date" className="form-control" />
-                </div>
-              </div>
-              <div className="col-lg-6 col-md-6 col-sm-12">
-                {/* Empty div for layout */}
-              </div>
+              ))}
+
+              {/* SERVICE SELECTOR */}
               <div className="col-lg-12">
                 <div className="form-group">
                   <div className="tophead56">
-                    <label htmlFor="usr">Service *</label>
+                    <label>Service *</label>
                     <div className="input-group">
-                      <input type="text" id="case" name="case" className="form-control price_append" placeholder="price" value={selectedPrice} readOnly />
+                      <input
+                        type="text"
+                        className="form-control price_append"
+                        placeholder="price"
+                        value={selectedPrice}
+                        readOnly
+                      />
                     </div>
                   </div>
+
+                  {/* TABS */}
                   <div className="radio service_row">
                     <ul className="nav nav-tabs">
                       {services.map((service) => (
-                        <li key={service.id} className={activeTab === service.id ? "active" : ""}>
-                          <a 
-                            href={`#${service.id}`}
+                        <li
+                          key={service.id}
+                          className={activeTab === service.id ? "active" : ""}
+                        >
+                          <a
+                            href="#"
                             onClick={(e) => {
                               e.preventDefault();
                               setActiveTab(service.id);
@@ -98,94 +233,129 @@ export default function ContactForm() {
                         </li>
                       ))}
                     </ul>
+
+                    {/* TAB CONTENT */}
                     <div className="tab-content" style={{ borderBottom: 0 }}>
                       {services.map((service) => (
-                        <div 
-                          key={service.id} 
-                          id={service.id} 
-                          className={`tab-pane fade ${activeTab === service.id ? "active in" : ""}`}
-                          style={{ display: activeTab === service.id ? "block" : "none" }}
+                        <div
+                          key={service.id}
+                          className={`tab-pane fade ${
+                            activeTab === service.id ? "active in" : ""
+                          }`}
+                          style={{
+                            display:
+                              activeTab === service.id ? "block" : "none",
+                          }}
                         >
                           <h3>{service.name}</h3>
+
                           <div className="form-group">
-                            <input type="hidden" name="selected_scan_id" id="selected_scan_id" value={service.id.split('-')[1]} />
-                            <select 
-                              className="form-control select_scan selectnewscanid" 
-                              name="select_scan" 
-                              id={`select_scan-${service.id.split('-')[1]}`}
+                            <select
+                              className="form-control"
                               onChange={handleHospitalChange}
-                              style={{ display: 'block' }}
                             >
                               <option value="">--Select hospital--</option>
-                              {service.hospitals.map((hospital, index) => (
-                                <option key={index} value={hospital.value}>
+                              {service.hospitals.map((hospital, i) => (
+                                <option key={i} value={hospital.value}>
                                   {hospital.label}
                                 </option>
                               ))}
                             </select>
-                            <span id="error_scan" style={{ color: '#FF0000' }}></span>
                           </div>
                         </div>
                       ))}
                     </div>
                   </div>
-                  <span id="error_hospital" style={{ color: '#FF0000' }}></span>
                 </div>
               </div>
-              <div className="col-lg-12">
-                <div className="form-group">
-                  <textarea id="message" name="message" className="form-control" rows={8}></textarea>
+
+              {/* SELECT FIELDS */}
+              {selectFields.map((field, index) => (
+                <div key={field.id + "-" + index} className="col-lg-12">
+                  <div className="form-group">
+                    <label>{field.label}</label>
+                    {renderFormField(field, index)}
+                  </div>
                 </div>
-              </div>
-              <p id="err"></p>
+              ))}
+
+              {/* MESSAGE FIELD */}
+              {messageField && (
+                <div className="col-lg-12">
+                  <div className="form-group">
+                    {/* <label>{messageField.label}</label> */}
+                    {renderFormField(messageField, 0)}
+                  </div>
+                </div>
+              )}
+
+              {/* SEND BUTTON */}
               <div className="form-group">
                 <div className="col-lg-8 col-md-8 col-sm-12">
                   <div className="checkbox">
                     <label>
-                      <input type="checkbox" id="hs_checkbox" name="hscheckbox" className="css-checkbox lrg" defaultChecked />
-                      <span className="css-label lrg hs_checkbox">Receive Your Comments By Email</span>
+                      <input type="checkbox" defaultChecked />
+                      <span>Receive Your Comments By Email</span>
                     </label>
-                    <div className="g-recaptcha" id="rcaptcha" data-sitekey="6LdB5dofAAAAADPkr_Kjfq5rPTVwWPXh0wRK2nxs"></div>
+                    <div className="g-recaptcha" id="rcaptcha"></div>
                   </div>
                 </div>
+
                 <div className="col-lg-4 col-md-6 col-sm-12">
-                  <input type="hidden" id="phone" name="phone" />
-                  <input type="hidden" id="url" name="url" />
-                  <input type="hidden" id="date" name="date" />
-                  <button id="em_sub" className="btn btn-success pull-right btn-gap" type="button">Send</button>
+                  <button
+                    className="btn btn-success pull-right btn-gap"
+                    type="button"
+                  >
+                    Send
+                  </button>
                 </div>
               </div>
             </div>
           </form>
         </div>
 
+        {/* RIGHT SIDE CONTACT DETAILS */}
         <div className="col-lg-4 col-md-6 col-sm-12">
-          <h4 className="hs_heading">Our Contact Details</h4>
+          <h4 className="hs_heading">
+            {section?.title || "Our Contact Details"}
+          </h4>
+
           <div className="hs_contact">
             <ul>
               <li>
                 <i className="fa fa-map-marker"></i>
-                <p>38, Bentick Street, Room No 4,1st Floor , Kolkata - 700069</p>
+                <p>{cleanHTML(section?.shortDescription || "")}</p>
               </li>
             </ul>
+
             <ul>
               <li>
                 <i className="fa fa-phone"></i>
-                <p><a href="tel:+91 8016322388">+91 8016322388</a></p>
+                <p>{cleanHTML(section?.subsections?.[0]?.title || "")}</p>
               </li>
             </ul>
+
             <ul>
               <li>
                 <i className="fa fa-envelope"></i>
-                <p><a href="mailto:helpdesk@mdpl.co">helpdesk@mdpl.co</a></p>
+                <p>{cleanHTML(section?.subsections?.[0]?.description || "")}</p>
               </li>
             </ul>
           </div>
+
           <div className="hs_contact_social">
             <div className="hs_profile_social">
               <ul>
-                <li><a href="https://www.facebook.com/mdpl.co" target="_blank"><i className="fa fa-facebook"></i></a></li>
-                <li><a href="https://twitter.com/mdpl_co" target="_blank"><i className="fa fa-twitter"></i></a></li>
+                <li>
+                  <a href="https://www.facebook.com/mdpl.co">
+                    <i className="fa fa-facebook"></i>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/mdpl_co">
+                    <i className="fa fa-twitter"></i>
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
