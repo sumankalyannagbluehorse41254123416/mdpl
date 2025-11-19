@@ -151,14 +151,13 @@ export default function CTScanTestimonials({ section = {} }: { section?: Section
             <style jsx>{`
               .customNavigation a {
                 display: inline-block;
-                margin: 0 5px;
-                cursor: pointer;
-                transition: background 0.3s ease;
-                color: #333;
+                  margin: 0 3px;
+                  cursor: pointer;
+                  transition: background 0.3s ease;
               }
               .btn_prev,
               .btn_next {
-                padding: 4px 8px;
+                padding: 2px 5px;
                 font-size: 18px;
                 border-radius: 4px;
               }
@@ -170,6 +169,7 @@ export default function CTScanTestimonials({ section = {} }: { section?: Section
                 opacity: 0.4;
                 pointer-events: none;
               }
+               
             `}</style>
 
           </div>

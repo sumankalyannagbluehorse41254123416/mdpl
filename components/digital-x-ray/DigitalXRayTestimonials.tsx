@@ -158,9 +158,8 @@ export default function DigitalXRayTestimonials({ section = {} }: { section?: Se
               }
               .btn_prev,
               .btn_next {
-                padding: 4px 8px;
-                font-size: 18px;
-                border-radius: 4px;
+              padding: 4px 8px;
+               color: #7f9aa0 !important;
               }
               .btn_prev:hover,
               .btn_next:hover {
