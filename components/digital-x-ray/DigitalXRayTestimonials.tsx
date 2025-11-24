@@ -79,7 +79,7 @@ export default function DigitalXRayTestimonials({ section = {} }: { section?: Se
           <div className="patients_testimonials">
             <div
               id="patients_testimonials_slider"
-              className="owl-carousel owl-theme owl-loaded owl-drag"
+              className="owl-carousel owl-theme owl-loaded owl-drag digital_xray_slider"
             >
               <div className="owl-stage-outer" style={{ overflow: "hidden" }}>
                 <div
@@ -94,12 +94,11 @@ export default function DigitalXRayTestimonials({ section = {} }: { section?: Se
                   {testimonials.map((testimonial, index) => (
                     <div
                       key={testimonial.id}
-                      className={`owl-item ${
-                        index >= currentSlide &&
-                        index < currentSlide + slidesToShow
+                      className={`owl-item ${index >= currentSlide &&
+                          index < currentSlide + slidesToShow
                           ? "active"
                           : ""
-                      }`}
+                        }`}
                       style={{
                         width: `${100 / slidesToShow}%`,
                         flex: `0 0 ${100 / slidesToShow}%`,
@@ -117,7 +116,7 @@ export default function DigitalXRayTestimonials({ section = {} }: { section?: Se
                           width={80}
                           height={80}
                         />
-                        <div style={{ marginLeft: "10px" }}>
+                        <div className="slider_text" style={{ marginLeft: "10px" }}>
                           <h4>{testimonial.name}</h4>
                           <p className="comment">{testimonial.comment}</p>
                         </div>
@@ -128,20 +127,21 @@ export default function DigitalXRayTestimonials({ section = {} }: { section?: Se
               </div>
             </div>
 
+
+
+
             {/* Navigation */}
             <div className="customNavigation text-right mt-3">
               <a
-                className={`btn_prev prev ${
-                  currentSlide === 0 ? "disabled" : ""
-                }`}
+                className={`btn_prev prev ${currentSlide === 0 ? "disabled" : ""
+                  }`}
                 onClick={prevSlide}
               >
                 <i className="fa fa-chevron-left"></i>
               </a>
               <a
-                className={`btn_next next ${
-                  currentSlide >= maxSlide ? "disabled" : ""
-                }`}
+                className={`btn_next next ${currentSlide >= maxSlide ? "disabled" : ""
+                  }`}
                 onClick={nextSlide}
               >
                 <i className="fa fa-chevron-right"></i>
@@ -177,3 +177,13 @@ export default function DigitalXRayTestimonials({ section = {} }: { section?: Se
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
