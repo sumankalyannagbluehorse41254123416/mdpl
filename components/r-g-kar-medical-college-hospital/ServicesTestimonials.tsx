@@ -154,13 +154,13 @@ export default function ServicesTestimonials({ section = {} }: { section?: Secti
                 margin: 0 5px;
                 cursor: pointer;
                 transition: background 0.3s ease;
-                color: #333;
+               
               }
               .btn_prev,
               .btn_next {
-                padding: 4px 8px;
-                font-size: 18px;
-                border-radius: 4px;
+                padding: 5px 6px;
+                font-size: 16px;
+               
               }
               .btn_prev:hover,
               .btn_next:hover {

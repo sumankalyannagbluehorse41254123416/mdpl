@@ -117,7 +117,7 @@ export default function CTScanTestimonials({ section = {} }: { section?: Section
                           width={80}
                           height={80}
                         />
-                        <div style={{ marginLeft: "10px" }}>
+                        <div className="slider_text" style={{ marginLeft: "10px" }}>
                           <h4>{testimonial.name}</h4>
                           <p className="comment">{testimonial.comment}</p>
                         </div>
@@ -158,8 +158,8 @@ export default function CTScanTestimonials({ section = {} }: { section?: Section
               .btn_prev,
               .btn_next {
                 padding: 2px 5px;
-                font-size: 18px;
-                border-radius: 4px;
+                font-size: 16px;
+                
               }
               .btn_prev:hover,
               .btn_next:hover {
