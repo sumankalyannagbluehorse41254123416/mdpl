@@ -62,6 +62,7 @@ export default async function ContactUs() {
     );
     form = formFields.form;
     fields = formFields.fields;
+    console.log("fields", fields);
   } catch (error) {
     console.log("Error in fetching form fields:", error);
   }
