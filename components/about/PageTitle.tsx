@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function PageTitle() {
   return (
-    <div className="hs_page_title">
+    <div className="hs_page_title hs_page_title_about">
       <div className="container">
         <h3>ABOUT US</h3>
         <ul>

@@ -134,7 +134,7 @@ export default function HeroSlider({ data }: HeroSliderProps) {
         }
         .health_slider .item {
           position: relative;
-          padding-top: 60px;
+        
         }
 
         /* ============ FIXED — WORKING PREV/NEXT BUTTONS ============ */
