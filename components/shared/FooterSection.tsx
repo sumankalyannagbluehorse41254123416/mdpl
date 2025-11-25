@@ -49,7 +49,7 @@ export default function FooterSection() {
                 <div className="row">
                   <div className="hs_footer_about_us">
                     <div className="col-lg-3 col-md-4 col-sm-12">
-                      <Link href="https://www.mdpl.co">
+                      <Link href="/">
                         <Image
                           src="/images/logo-White.png"
                           alt="logo"
