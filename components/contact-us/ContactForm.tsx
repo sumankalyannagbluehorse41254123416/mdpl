@@ -567,7 +567,7 @@ export default function ContactForm({
         <div className="col-lg-8 col-md-7 col-sm-7">
           <h4 className="hs_heading">{form?.title || "Leave a Message"}</h4>
 
-          <form onSubmit={handleSubmit}>
+          <form className="hs_comment_form" onSubmit={handleSubmit}>
             <div className="row">
               {/* BASIC FIELDS */}
               {basicFields.map((field, index) => (
@@ -579,15 +579,14 @@ export default function ContactForm({
                     <span className="input-group-btn">
                       <button className="btn btn-success" type="button">
                         <i
-                          className={`fa fa-${
-                            field.type === "email"
+                          className={`fa fa-${field.type === "email"
                               ? "envelope"
                               : field.type === "tel"
-                              ? "phone"
-                              : field.type === "date"
-                              ? "calendar"
-                              : "user"
-                          }`}
+                                ? "phone"
+                                : field.type === "date"
+                                  ? "calendar"
+                                  : "user"
+                            }`}
                         ></i>
                       </button>
                     </span>
@@ -640,9 +639,8 @@ export default function ContactForm({
                       {services.map((service) => (
                         <div
                           key={service.id}
-                          className={`tab-pane fade ${
-                            activeTab === service.id ? "active in" : ""
-                          }`}
+                          className={`tab-pane fade ${activeTab === service.id ? "active in" : ""
+                            }`}
                           style={{
                             display:
                               activeTab === service.id ? "block" : "none",
@@ -716,7 +714,7 @@ export default function ContactForm({
         </div>
 
         {/* RIGHT CONTACT DETAILS */}
-        <div className="col-lg-4 col-md-6 col-sm-12">
+        <div className="col-lg-4 col-md-5 col-sm-12">
           <h4 className="hs_heading">
             {section?.title || "Our Contact Details"}
           </h4>
@@ -724,7 +722,7 @@ export default function ContactForm({
           <div className="hs_contact">
             <ul>
               <li>
-                <i className="fa fa-map-marker"></i>
+                <i className="fas fa-map-marker-alt"></i>
                 <p>{cleanHTML(section?.shortDescription || "")}</p>
               </li>
             </ul>
@@ -749,12 +747,12 @@ export default function ContactForm({
               <ul>
                 <li>
                   <a href="https://www.facebook.com/mdpl.co">
-                    <i className="fa fa-facebook"></i>
+                    <i className="fa-brands fa-facebook-f"></i>
                   </a>
                 </li>
                 <li>
                   <a href="https://twitter.com/mdpl_co">
-                    <i className="fa fa-twitter"></i>
+                    <i className="fa-brands fa-twitter"></i>
                   </a>
                 </li>
               </ul>
