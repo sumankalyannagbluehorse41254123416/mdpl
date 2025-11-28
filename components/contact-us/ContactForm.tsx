@@ -597,7 +597,7 @@ export default function ContactForm({
               ))}
 
               {/* SERVICE SELECTOR */}
-              <div className="col-lg-12">
+              <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="form-group">
                   <div className="tophead56">
                     <label>Service *</label>
@@ -699,7 +699,7 @@ export default function ContactForm({
                   </div>
                 </div>
 
-                <div className="col-lg-4 col-md-6 col-sm-12">
+                <div className="col-lg-4 col-md-12 col-sm-12">
                   <button
                     className="btn btn-success pull-right btn-gap"
                     type="submit"
@@ -714,7 +714,7 @@ export default function ContactForm({
         </div>
 
         {/* RIGHT CONTACT DETAILS */}
-        <div className="col-lg-4 col-md-5 col-sm-12">
+        <div className="col-lg-4 col-md-5 col-sm-5">
           <h4 className="hs_heading">
             {section?.title || "Our Contact Details"}
           </h4>
