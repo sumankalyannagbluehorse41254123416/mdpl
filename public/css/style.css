@@ -3366,6 +3366,12 @@ ul.pattern li #style {
     padding: 0px 20px;
 }
 
+@media (max-width:1024px){
+    .hs_comment_form .input-group .input-group-btn button {
+        margin-top: 0;
+    }
+}
+
 .hs_checkbox {
     background-image: url("/images/icon/vlad.png");
 }
