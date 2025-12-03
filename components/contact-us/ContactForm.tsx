@@ -63,18 +63,18 @@ const validateEmail = (email: string): { isValid: boolean; message: string } => 
   }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-  
+
   if (!email.includes("@")) {
     return { isValid: false, message: "Email must contain @" };
   }
-  
+
   if (!email.includes(".")) {
     return { isValid: false, message: "Email must contain . after @gmail" };
   }
 
   const atIndex = email.indexOf("@");
   const dotIndex = email.indexOf(".", atIndex);
-  
+
   if (dotIndex === -1) {
     return { isValid: false, message: "Email must contain . after @gmail" };
   }
@@ -103,9 +103,6 @@ export default function ContactForm({
   const [emailError, setEmailError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // -------------------------------
-  // Dynamic CMS Services
-  // -------------------------------
   const services = serviceSections.map((svc, i) => ({
     id: `newscan-${i}`,
     name: cleanHTML(svc?.title || `Service ${i + 1}`),
@@ -116,12 +113,12 @@ export default function ContactForm({
   }));
 
   const handleInputChange = (fieldId: string, value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      [fieldId]: value,
-    }));
 
-    // Validate email in real-time
+    // 🚨 Prevent ONLY spaces in real time
+    if (value.trim() === "" && value.length > 0) return;
+
+    setFormData((prev) => ({ ...prev, [fieldId]: value }));
+
     if (fieldId === "email") {
       const validation = validateEmail(value);
       setEmailError(validation.isValid ? "" : validation.message);
@@ -143,9 +140,7 @@ export default function ContactForm({
       required: field.required || false,
       value: formData[fieldKey] || "",
       onChange: (
-        e: React.ChangeEvent<
-          HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-        >
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
       ) => handleInputChange(fieldKey, e.target.value),
     };
 
@@ -163,9 +158,7 @@ export default function ContactForm({
           <select {...commonProps}>
             <option value="">Select {field.label}</option>
             {field.options?.map((option, i) => (
-              <option key={i} value={option}>
-                {option}
-              </option>
+              <option key={i} value={option}>{option}</option>
             ))}
           </select>
         );
@@ -186,8 +179,15 @@ export default function ContactForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Validate email before submission
+
+    // 🚨 Prevent submission if required fields have only spaces
+    for (const field of fields) {
+      if (field.required && (!formData[field.name] || formData[field.name].trim() === "")) {
+        alert(`❗ ${field.label} cannot be empty or only spaces.`);
+        return;
+      }
+    }
+
     const emailField = fields.find(f => f.type === "email");
     if (emailField && formData[emailField.name]) {
       const validation = validateEmail(formData[emailField.name]);
@@ -202,12 +202,7 @@ export default function ContactForm({
 
     try {
       const host = window.location.host || "";
-
-      const payload = {
-        ...formData,
-      };
-
-      const success = await handleSubmitForm(host, payload);
+      const success = await handleSubmitForm(host, { ...formData });
 
       if (!success) {
         alert("Failed to submit form!");
@@ -218,7 +213,6 @@ export default function ContactForm({
         setEmailError("");
       }
     } catch (err) {
-      console.error("Submit Error:", err);
       alert("Something went wrong!");
     } finally {
       setLoading(false);
