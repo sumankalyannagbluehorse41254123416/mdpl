@@ -58,37 +58,30 @@ const cleanHTML = (text: string = ""): string => {
 // Email Validation
 // --------------------
 const validateEmail = (email: string): { isValid: boolean; message: string } => {
-  if (!email) {
-    return { isValid: false, message: "" };
-  }
+  if (!email) return { isValid: false, message: "" };
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  // 1️⃣ Before @ → letters + optional numbers allowed
+  // 2️⃣ After @ → must start with a letter (no numbers allowed immediately after @)
+  // 3️⃣ Domain must end with at least 2 letters (.com, .org, .in etc)
+  const emailRegex = /^[a-zA-Z]+[a-zA-Z0-9._]*@[a-zA-Z][a-zA-Z0-9.-]*\.[a-zA-Z]{2,}$/;
 
   if (!email.includes("@")) {
     return { isValid: false, message: "Email must contain @" };
   }
 
-  if (!email.includes(".")) {
-    return { isValid: false, message: "Email must contain . after @gmail" };
-  }
-
   const atIndex = email.indexOf("@");
-  const dotIndex = email.indexOf(".", atIndex);
-
-  if (dotIndex === -1) {
-    return { isValid: false, message: "Email must contain . after @gmail" };
-  }
-
-  const domain = email.substring(dotIndex + 1);
-  if (domain.length < 2) {
-    return { isValid: false, message: "Must have at least 2 characters after . (e.g., .com, .org)" };
+  if (/\d/.test(email[atIndex + 1])) {
+    return { isValid: false, message: "Domain cannot start with numbers (e.g. @gmail.com)" };
   }
 
   if (!emailRegex.test(email)) {
-    return { isValid: false, message: "Please enter a valid email format (e.g., example@gmail.com)" };
+    return { 
+      isValid: false, 
+      message: "Invalid email format. Example: johndoe22@gmail.com" 
+    };
   }
 
-  return { isValid: true, message: "Valid email format" };
+  return { isValid: true, message: "" };
 };
 
 export default function ContactForm({
