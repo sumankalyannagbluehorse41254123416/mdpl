@@ -2176,6 +2176,10 @@ ul.pattern li #style {
     height: 80px;
 }
 
+.service-scan.service_scan_header{
+    height: 55px;
+}
+
 .service-scan h3 {
     text-align: center;
     margin: 12px;
@@ -5863,6 +5867,7 @@ li.hc-home-new:after {
     .service-scan {
         height: 70px;
     }
+
 
     .clg-bg {
         height: 150px;
