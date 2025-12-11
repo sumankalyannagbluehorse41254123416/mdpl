@@ -31,7 +31,7 @@ export default function OurDirectors({ section }: OurDirectorsProps) {
             {directors.map((director, index) => (
               <div
                 key={director.id || index}
-                className="col-lg-4 col-md-4 sec_texxt bodd"
+                className="col-lg-4 col-md-4 col-sm-4 sec_texxt bodd"
               >
                 <div className="wde">
                   {/* ✅ Dynamic image from subsection.image */}
