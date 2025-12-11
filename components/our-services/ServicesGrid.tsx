@@ -25,7 +25,7 @@ export default function ServicesGrid({ data }: ServicesGridProps) {
         <div className="row">
           {services.map((service) => (
             <div key={service.id} className="col-lg-4 col-md-4 col-sm-4">
-              <div className="service-scan">
+              <div className="service-scan service_scan_header">
                 <h3>
                   <a href={service.link}>{service.title}</a>
                 </h3>
