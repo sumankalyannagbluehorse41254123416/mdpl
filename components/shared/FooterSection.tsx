@@ -71,12 +71,12 @@ export default function FooterSection() {
                           className="fa fa-map-marker quick_col"
                           aria-hidden="true"
                         ></i>{" "}
-                        <span></span>38,Bentick Street, Room No 4,1st Floor , Kolkata - 700069
+                        <span>38,Bentick Street, Room No 4,1st Floor , Kolkata - 700069</span>
                       </p>
                       <p>
                         <a className="ph_number" href="tel:+8016322388">
-                          <i className="fa fa-phone" aria-hidden="true"></i> +91
-                          8016322388
+                          <i className="fa fa-phone" aria-hidden="true"></i> 
+                          <span>+91 8016322388</span>
                         </a>
                       </p>
 

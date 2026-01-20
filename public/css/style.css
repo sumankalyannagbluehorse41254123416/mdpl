@@ -126,6 +126,19 @@ a,
     transition: 0.4s;
 }
 
+.radio.service_row .form-group .form-control {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='black' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+
+    padding-right: 30px
+}
+
 .change .bar1 {
     -webkit-transform: rotate(-45deg) translate(-5px, 5px);
     transform: rotate(-45deg) translate(-5px, 5px);
@@ -1770,12 +1783,13 @@ ul.pattern li #style {
 #our_doctor_team_slider {
     margin-bottom: 28px;
 }
-.our_centers_slider{
+
+.our_centers_slider {
     margin-top: 20px;
 }
 
-@media (max-width:575px){
-    .our_centers_slider{
+@media (max-width:575px) {
+    .our_centers_slider {
         margin-top: 0px;
     }
 }
@@ -2176,7 +2190,7 @@ ul.pattern li #style {
     height: 80px;
 }
 
-.service-scan.service_scan_header{
+.service-scan.service_scan_header {
     height: 55px;
 }
 
@@ -3379,7 +3393,7 @@ ul.pattern li #style {
     padding: 0px 20px;
 }
 
-@media (max-width:1024px){
+@media (max-width:1024px) {
     .hs_comment_form .input-group .input-group-btn button {
         margin-top: 0;
     }
@@ -3772,7 +3786,7 @@ div[data-target]>div {
 
 
 @media (max-width:575px) {
-     .slider_text {
+    .slider_text {
         text-align: center;
     }
 
@@ -3882,6 +3896,11 @@ div[data-target]>div {
     letter-spacing: 0.5px;
     margin-top: 25px;
     margin-left: 20px;
+}
+
+#hs_footer .hs_contact_detail p {
+    display: flex;
+    gap: 4px;
 }
 
 #hs_footer .hs_footer_content h3 {
@@ -6849,6 +6868,18 @@ li.hc-home-new:after {
     }
 }
 
+@media (min-width:1024px) and (max-width:1366px) {
+    .scan-bg {
+        height: 295px;
+    }
+}
+
+@media (min-width:992px) and (max-width:1024px) {
+    .hs_service {
+        height: 370px;
+    }
+}
+
 @media (max-width: 600px) {
     .hs_social_media {
         display: none;
@@ -7294,6 +7325,7 @@ li.hc-home-new:after {
         margin-top: 13px;
         text-align: center;
         width: 100%;
+        margin-left: 0 !important;
     }
 
     .clg-hptl {
